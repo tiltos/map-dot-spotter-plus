@@ -15,8 +15,6 @@ const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
   const { deletePoint, updatePoint } = useMap();
   const [isHovering, setIsHovering] = useState(false);
   
-  const iconSize = 32 / scale;
-
   // Position styles
   const positionStyle = {
     left: `${point.x}%`,
@@ -50,14 +48,19 @@ const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
           >
-            <div className="relative">
+            <div className="relative flex flex-col items-center">
               <div 
                 className={`rounded-full p-1 flex items-center justify-center transition-all duration-300 ${
                   isHovering ? 'bg-primary/40 scale-110' : 'bg-primary/20'
                 }`}
-                style={{ width: `${iconSize + 8}px`, height: `${iconSize + 8}px` }}
               >
-                {getIconForType(point.icon, iconSize)}
+                <div className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" style={{ width: "20px", height: "20px" }}>
+                  {getIconForType(point.icon, 20)}
+                </div>
+              </div>
+              
+              <div className="mt-1 text-white text-[10px] font-serif whitespace-nowrap drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
+                {point.name}
               </div>
               
               {isHovering && (

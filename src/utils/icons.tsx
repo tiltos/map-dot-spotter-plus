@@ -6,31 +6,37 @@ import {
 import { IconOption } from "@/types";
 
 export const getIconForType = (type: string, size: number = 24) => {
+  const iconProps = {
+    size,
+    strokeWidth: 2,
+    absoluteStrokeWidth: true,
+  };
+
   switch (type) {
     case "location":
-      return <MapPin size={size} />;
+      return <MapPin {...iconProps} />;
     case "castle":
-      return <Castle size={size} />;
+      return <Castle {...iconProps} />;
     case "camp":
-      return <Tent size={size} />;
+      return <Tent {...iconProps} />;
     case "mountain":
-      return <Mountain size={size} />;
+      return <Mountain {...iconProps} />;
     case "forest":
-      return <Trees size={size} />;
+      return <Trees {...iconProps} />;
     case "danger":
-      return <Skull size={size} />;
+      return <Skull {...iconProps} />;
     case "port":
-      return <Anchor size={size} />;
+      return <Anchor {...iconProps} />;
     case "settlement":
-      return <Home size={size} />;
+      return <Home {...iconProps} />;
     case "city":
-      return <Building size={size} />;
+      return <Building {...iconProps} />;
     case "landmark":
-      return <Flag size={size} />;
+      return <Flag {...iconProps} />;
     case "peaks":
-      return <Compass size={size} />;
+      return <Compass {...iconProps} />;
     default:
-      return <MapPin size={size} />;
+      return <MapPin {...iconProps} />;
   }
 };
 
