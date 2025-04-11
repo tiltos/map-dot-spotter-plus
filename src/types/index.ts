@@ -13,3 +13,10 @@ export type IconOption = {
   name: string;
   src: string;
 };
+
+// Extend the Window interface to support our modal methods
+declare global {
+  interface Window {
+    [key: string]: any;
+  }
+}

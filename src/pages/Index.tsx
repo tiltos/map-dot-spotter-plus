@@ -24,13 +24,13 @@ const Index = () => {
             <div className="md:col-span-3 h-full">
               <InteractiveMap />
             </div>
-            <div className="h-full">
+            <div className="h-full overflow-y-auto">
               <PointsList />
             </div>
           </div>
         </main>
         
-        {/* Add modals at the root level */}
+        {/* Add modals as controlled components instead of using ID attributes */}
         <AddPointForm />
         <AddPointForm isEdit={true} />
       </div>

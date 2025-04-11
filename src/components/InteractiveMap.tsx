@@ -26,13 +26,9 @@ const InteractiveMap = () => {
     const x = ((e.clientX - rect.left) / scale - position.x / scale) * 100 / mapContainerRef.current.offsetWidth;
     const y = ((e.clientY - rect.top) / scale - position.y / scale) * 100 / mapContainerRef.current.offsetHeight;
     
-    // Show the AddPointForm
-    const modal = document.getElementById('add-point-modal') as HTMLDialogElement;
-    if (modal) {
-      // Store coordinates in data attributes
-      modal.dataset.x = x.toString();
-      modal.dataset.y = y.toString();
-      modal.showModal();
+    // Use the window's modal method instead of directly manipulating the DOM
+    if (window['add-point-modal'] && typeof window['add-point-modal'].showModal === 'function') {
+      window['add-point-modal'].showModal(x, y);
     }
     
     setIsAddingPoint(false);

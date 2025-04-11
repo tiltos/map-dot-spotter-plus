@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose, DialogTrigger } from "@/components/ui/dialog";
 import { useMap } from "@/context/MapContext";
 import { X } from "lucide-react";
 import { getIconOptions } from "@/utils/icons";
@@ -19,20 +19,32 @@ const AddPointForm = ({ isEdit = false }: AddPointFormProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [icon, setIcon] = useState("location");
+  const [isOpen, setIsOpen] = useState(false);
   const iconOptions = getIconOptions();
+  
+  // Store point data in local state instead of DOM attributes
+  const [pointData, setPointData] = useState({
+    id: "",
+    x: 0,
+    y: 0,
+    name: "",
+    description: "",
+    icon: "location"
+  });
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const modal = document.getElementById(isEdit ? 'edit-point-modal' : 'add-point-modal') as HTMLDialogElement;
-    
     if (isEdit) {
-      const pointId = modal.dataset.pointId || "";
-      updatePoint(pointId, { name, description, icon });
+      updatePoint(pointData.id, { name, description, icon });
     } else {
-      const x = parseFloat(modal.dataset.x || "0");
-      const y = parseFloat(modal.dataset.y || "0");
-      addPoint({ name, description, x, y, icon });
+      addPoint({ 
+        name, 
+        description, 
+        x: pointData.x, 
+        y: pointData.y, 
+        icon 
+      });
     }
     
     // Reset form
@@ -40,26 +52,53 @@ const AddPointForm = ({ isEdit = false }: AddPointFormProps) => {
     setDescription("");
     setIcon("location");
     
-    // Close modal
-    modal.close();
+    // Close dialog
+    setIsOpen(false);
   };
   
   // For edit mode - populate form with existing data
   useEffect(() => {
-    if (isEdit) {
-      const modal = document.getElementById('edit-point-modal') as HTMLDialogElement;
-      modal.addEventListener('toggle', () => {
-        if (modal.open) {
-          setName(modal.dataset.pointName || "");
-          setDescription(modal.dataset.pointDescription || "");
-          setIcon(modal.dataset.pointIcon || "location");
-        }
-      });
+    if (isEdit && isOpen) {
+      setName(pointData.name);
+      setDescription(pointData.description || "");
+      setIcon(pointData.icon);
     }
+  }, [isEdit, isOpen, pointData]);
+  
+  // Public methods exposed via ref
+  const openAddPointDialog = (x: number, y: number) => {
+    setPointData({ id: "", x, y, name: "", description: "", icon: "location" });
+    setIsOpen(true);
+  };
+  
+  const openEditPointDialog = (id: string, name: string, description: string = "", icon: string) => {
+    setPointData({ id, x: 0, y: 0, name, description, icon });
+    setIsOpen(true);
+  };
+  
+  // Expose these methods to parent components via a custom attribute on the DOM element
+  useEffect(() => {
+    if (!isEdit) {
+      const modalId = 'add-point-modal';
+      window[modalId] = {
+        showModal: openAddPointDialog,
+      };
+    } else {
+      const modalId = 'edit-point-modal';
+      window[modalId] = {
+        showModal: openEditPointDialog,
+      };
+    }
+    
+    // Cleanup
+    return () => {
+      const modalId = isEdit ? 'edit-point-modal' : 'add-point-modal';
+      delete window[modalId];
+    };
   }, [isEdit]);
 
   return (
-    <Dialog id={isEdit ? "edit-point-modal" : "add-point-modal"}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{isEdit ? "Edit Point of Interest" : "Add New Point of Interest"}</DialogTitle>
