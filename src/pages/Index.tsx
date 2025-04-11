@@ -1,13 +1,40 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { MapProvider } from "@/context/MapContext";
+import InteractiveMap from "@/components/InteractiveMap";
+import PointsList from "@/components/PointsList";
+import AddPointForm from "@/components/AddPointForm";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <MapProvider>
+      <div className="min-h-screen bg-background flex flex-col">
+        <header className="border-b border-border p-4">
+          <div className="container flex justify-between items-center">
+            <h1 className="text-2xl font-bold tracking-wider">
+              SKARNHEIM MAP EXPLORER
+            </h1>
+            <div className="text-sm text-muted-foreground">
+              Interactive Fantasy Map
+            </div>
+          </div>
+        </header>
+        
+        <main className="flex-1 container py-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 h-[calc(100vh-10rem)]">
+            <div className="md:col-span-3 h-full">
+              <InteractiveMap />
+            </div>
+            <div className="h-full">
+              <PointsList />
+            </div>
+          </div>
+        </main>
+        
+        {/* Add modals at the root level */}
+        <AddPointForm />
+        <AddPointForm isEdit={true} />
       </div>
-    </div>
+    </MapProvider>
   );
 };
 

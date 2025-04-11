@@ -1,0 +1,125 @@
+
+import { useState, useRef, useEffect, MouseEvent } from "react";
+import { useMap } from "@/context/MapContext";
+import PointOfInterest from "./PointOfInterest";
+import MapControls from "./MapControls";
+
+const InteractiveMap = () => {
+  const { points, addPoint } = useMap();
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
+  
+  // State for pan and zoom
+  const [isPanning, setIsPanning] = useState(false);
+  const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isAddingPoint, setIsAddingPoint] = useState(false);
+  
+  // Handle map click to add a new point
+  const handleMapClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isAddingPoint || !mapContainerRef.current) return;
+    
+    const rect = mapContainerRef.current.getBoundingClientRect();
+    
+    // Calculate position relative to the current scale and position
+    const x = ((e.clientX - rect.left) / scale - position.x / scale) * 100 / mapContainerRef.current.offsetWidth;
+    const y = ((e.clientY - rect.top) / scale - position.y / scale) * 100 / mapContainerRef.current.offsetHeight;
+    
+    // Show the AddPointForm
+    const modal = document.getElementById('add-point-modal') as HTMLDialogElement;
+    if (modal) {
+      // Store coordinates in data attributes
+      modal.dataset.x = x.toString();
+      modal.dataset.y = y.toString();
+      modal.showModal();
+    }
+    
+    setIsAddingPoint(false);
+  };
+  
+  // Start panning
+  const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
+    if (isAddingPoint) return;
+    setIsPanning(true);
+    setStartPoint({ x: e.clientX - position.x, y: e.clientY - position.y });
+  };
+  
+  // Pan the map
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    if (!isPanning) return;
+    setPosition({
+      x: e.clientX - startPoint.x,
+      y: e.clientY - startPoint.y
+    });
+  };
+  
+  // Stop panning
+  const handleMouseUp = () => {
+    setIsPanning(false);
+  };
+  
+  // Zoom in and out
+  const handleZoom = (direction: "in" | "out") => {
+    setScale(prevScale => {
+      const newScale = direction === "in" 
+        ? Math.min(prevScale * 1.2, 5) 
+        : Math.max(prevScale / 1.2, 0.5);
+      return newScale;
+    });
+  };
+  
+  // Reset the map position and scale
+  const handleReset = () => {
+    setScale(1);
+    setPosition({ x: 0, y: 0 });
+  };
+  
+  // Handle adding a new point
+  const toggleAddPoint = () => {
+    setIsAddingPoint(!isAddingPoint);
+  };
+
+  return (
+    <div className="relative w-full h-full overflow-hidden rounded-lg border border-border">
+      <div
+        ref={mapContainerRef}
+        className={`relative w-full h-full overflow-hidden bg-black ${isAddingPoint ? "cursor-crosshair" : "cursor-grab"} ${isPanning ? "cursor-grabbing" : ""}`}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onClick={handleMapClick}
+      >
+        <div
+          ref={mapRef}
+          className="absolute w-full h-full origin-center transition-transform duration-200"
+          style={{
+            transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+          }}
+        >
+          <img
+            src="/lovable-uploads/04d614ac-28c4-488f-bffb-ecd4a678fe5a.png"
+            alt="Skarnheim Map"
+            className="w-full h-full object-contain pointer-events-none"
+          />
+          
+          {/* Render all points of interest */}
+          {points.map((point) => (
+            <PointOfInterest key={point.id} point={point} scale={scale} />
+          ))}
+        </div>
+      </div>
+      
+      <MapControls
+        onZoomIn={() => handleZoom("in")}
+        onZoomOut={() => handleZoom("out")}
+        onReset={handleReset}
+        onAddPoint={toggleAddPoint}
+        isAddingPoint={isAddingPoint}
+      />
+    </div>
+  );
+};
+
+export default InteractiveMap;
