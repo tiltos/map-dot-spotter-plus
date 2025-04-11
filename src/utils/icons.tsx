@@ -1,7 +1,8 @@
+
 import { 
   MapPin, Castle, Tent, Mountain, Trees, Skull, 
   Anchor, Home, Building, Flag, Compass,
-  HelpCircle, HomeIcon, Buildings, House
+  HelpCircle, HomeIcon, House
 } from "lucide-react";
 import { IconOption } from "@/types";
 
@@ -24,7 +25,7 @@ export const getIconForType = (type: string, size: number = 24) => {
     case "unknown":
       return <HelpCircle {...iconProps} />;
     case "village":
-      return <Buildings {...iconProps} />;
+      return <Building {...iconProps} />; // Changed from Buildings to Building
     case "hamlet":
       return <House {...iconProps} />;
     case "landmark":
@@ -53,7 +54,7 @@ export const getIconOptions = (): { id: string; name: string; icon: JSX.Element 
     { id: "delve", name: "Delve", icon: <Tent size={24} /> },
     { id: "threat", name: "Threat Camp", icon: <Skull size={24} /> },
     { id: "unknown", name: "Unknown", icon: <HelpCircle size={24} /> },
-    { id: "village", name: "Village", icon: <Buildings size={24} /> },
+    { id: "village", name: "Village", icon: <Building size={24} /> }, // Changed from Buildings to Building
     { id: "hamlet", name: "Hamlet", icon: <House size={24} /> },
     { id: "landmark", name: "Landmark", icon: <Flag size={24} /> },
     
