@@ -95,7 +95,7 @@ const InteractiveMap = () => {
           }}
         >
           <img
-            src="/lovable-uploads/04d614ac-28c4-488f-bffb-ecd4a678fe5a.png"
+            src="/lovable-uploads/map-locations.jpg"
             alt="Skarnheim Map"
             className="w-full h-full object-contain pointer-events-none"
           />

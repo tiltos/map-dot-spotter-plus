@@ -84,7 +84,7 @@ const PointsList = () => {
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium truncate">{point.name}</h3>
                   {point.description && (
-                    <p className="text-xs text-muted-foreground truncate">{point.description}</p>
+                    <p className="text-xs text-muted-foreground wrap">{point.description}</p>
                   )}
                 </div>
                 
