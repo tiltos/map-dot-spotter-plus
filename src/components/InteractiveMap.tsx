@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect, MouseEvent } from "react";
 import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
@@ -9,24 +8,20 @@ const InteractiveMap = () => {
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   
-  // State for pan and zoom
   const [isPanning, setIsPanning] = useState(false);
   const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isAddingPoint, setIsAddingPoint] = useState(false);
   
-  // Handle map click to add a new point
   const handleMapClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!isAddingPoint || !mapContainerRef.current) return;
     
     const rect = mapContainerRef.current.getBoundingClientRect();
     
-    // Calculate position relative to the current scale and position
     const x = ((e.clientX - rect.left) / scale - position.x / scale) * 100 / mapContainerRef.current.offsetWidth;
     const y = ((e.clientY - rect.top) / scale - position.y / scale) * 100 / mapContainerRef.current.offsetHeight;
     
-    // Use the window's modal method instead of directly manipulating the DOM
     if (window['add-point-modal'] && typeof window['add-point-modal'].showModal === 'function') {
       window['add-point-modal'].showModal(x, y);
     }
@@ -34,14 +29,12 @@ const InteractiveMap = () => {
     setIsAddingPoint(false);
   };
   
-  // Start panning
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (isAddingPoint) return;
     setIsPanning(true);
     setStartPoint({ x: e.clientX - position.x, y: e.clientY - position.y });
   };
   
-  // Pan the map
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!isPanning) return;
     setPosition({
@@ -50,12 +43,10 @@ const InteractiveMap = () => {
     });
   };
   
-  // Stop panning
   const handleMouseUp = () => {
     setIsPanning(false);
   };
   
-  // Zoom in and out
   const handleZoom = (direction: "in" | "out") => {
     setScale(prevScale => {
       const newScale = direction === "in" 
@@ -65,19 +56,17 @@ const InteractiveMap = () => {
     });
   };
   
-  // Reset the map position and scale
   const handleReset = () => {
     setScale(1);
     setPosition({ x: 0, y: 0 });
   };
   
-  // Handle adding a new point
   const toggleAddPoint = () => {
     setIsAddingPoint(!isAddingPoint);
   };
 
   return (
-    <div className="relative w-full h-full overflow-hidden rounded-lg border border-border">
+    <div className="w-full h-full overflow-hidden border border-border">
       <div
         ref={mapContainerRef}
         className={`relative w-full h-full overflow-hidden bg-black ${isAddingPoint ? "cursor-crosshair" : "cursor-grab"} ${isPanning ? "cursor-grabbing" : ""}`}
@@ -100,7 +89,6 @@ const InteractiveMap = () => {
             className="w-full h-full object-contain pointer-events-none"
           />
           
-          {/* Render all points of interest */}
           {points.map((point) => (
             <PointOfInterest key={point.id} point={point} scale={scale} />
           ))}
