@@ -82,7 +82,7 @@ const PointsList = () => {
                 </div>
                 
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium truncate">{point.name}</h3>
+                  <h3 className="font-medium truncate">{point.name}<span className="font-light text-muted-foreground">&nbsp;({point.x},{point.y})</span></h3>
                   {point.description && (
                     <p className="text-xs text-muted-foreground wrap">{point.description}</p>
                   )}

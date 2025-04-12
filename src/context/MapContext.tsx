@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 import { PointOfInterestType } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "@/components/ui/use-toast";
+import pointsData from "@/data/pointsOfInterest.json";
 
 type MapContextType = {
   points: PointOfInterestType[];
@@ -14,32 +15,7 @@ type MapContextType = {
 const MapContext = createContext<MapContextType | undefined>(undefined);
 
 export const MapProvider = ({ children }: { children: ReactNode }) => {
-  const [points, setPoints] = useState<PointOfInterestType[]>([
-    {
-      id: "1",
-      name: "Myrkholtt",
-      description: "Dark, dense forest in the northern region",
-      x: 35,
-      y: 33,
-      icon: "forest",
-    },
-    {
-      id: "2",
-      name: "Blodmark",
-      description: "Rocky, barren lands with reddish soil",
-      x: 40,
-      y: 15,
-      icon: "mountain",
-    },
-    {
-      id: "3",
-      name: "Frostbound Peaks",
-      description: "Snow-capped mountain range with treacherous paths",
-      x: 65,
-      y: 58,
-      icon: "peaks",
-    },
-  ]);
+  const [points, setPoints] = useState<PointOfInterestType[]>(pointsData);
 
   const addPoint = (point: Omit<PointOfInterestType, "id">) => {
     const newPoint = { ...point, id: uuidv4() };

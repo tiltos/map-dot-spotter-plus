@@ -14,11 +14,12 @@ interface PointOfInterestProps {
 const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
   const { deletePoint, updatePoint } = useMap();
   const [isHovering, setIsHovering] = useState(false);
+
   
   // Position styles
   const positionStyle = {
-    left: `${point.x}%`,
-    top: `${point.y}%`,
+    left: `calc(${point.x}% - 10px)`,
+    top: `calc(${point.y}% - 25px)`,
     transform: `scale(${scale})`,
         transformOrigin: "center",
   };
@@ -61,32 +62,20 @@ const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
                 </div>
               </div>
               
-              <div className="mt-1 text-white text-[10px] font-serif whitespace-nowrap drop-shadow-[0px_0px_2px_rgba(0,0,0,1)]">
+              <div className="mt-1 text-white text-[12px] pb-[10px] font-serif whitespace-nowrap drop-shadow-[0px_5px_5px_rgba(0,0,0,0.5)] drop-shadow-[0px_0px_2px_rgba(0,0,0,1)]">
                 {point.name}
               </div>
               
               {isHovering && (
                 <div className="absolute -top-2 -right-2 flex gap-1">
-                  {/* <button
-                    onClick={handleEdit}
-                    className="bg-secondary text-secondary-foreground rounded-full p-1 hover:bg-secondary/80"
-                  >
-                    <Edit size={14} />
-                  </button>
-                  <button
-                    onClick={handleDelete}
-                    className="bg-destructive text-destructive-foreground rounded-full p-1 hover:bg-destructive/80"
-                  >
-                    <X size={14} />
-                  </button> */}
                 </div>
               )}
             </div>
           </div>
         </TooltipTrigger>
-        <TooltipContent>
-          <div>
-            <h4 className="font-bold">{point.name}</h4>
+        <TooltipContent scale={scale}>
+          <div className="max-w-xl">
+            <h3 className="text-[16px] font-bold">{point.name}</h3>
             {point.description && <p className="text-sm">{point.description}</p>}
           </div>
         </TooltipContent>

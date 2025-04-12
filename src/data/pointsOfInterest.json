@@ -1,0 +1,34 @@
+[
+    {
+      "id": "1",
+      "name": "Myrkholtt",
+      "description": "Dark, dense forest in the northern region",
+      "x": 35,
+      "y": 33,
+      "icon": "forest"
+    },
+    {
+      "id": "2",
+      "name": "Blodmark",
+      "description": "Rocky, barren lands with reddish soil",
+      "x": 40,
+      "y": 15,
+      "icon": "mountain"
+    },
+    {
+      "id": "3",
+      "name": "Kallmyr Hall",
+      "description": "Kallmyr Hall is the last remnant of a shattered noble house. The hall rises from frostbitten land, surrounded by stone cairns, burnt orchards, and rot-haunted pastures. Lord Heigrim the Blacktooth still lives — or something that bears his name does. The villagers cling to his protection, though they no longer speak of the manor’s west wing.",
+      "x": 41.404303031840016,
+      "y": 65.7799671592775,
+      "icon": "halmet"
+    },
+    {
+      "id": "4",
+      "name": "Eldnavir",
+      "description": "Eldnavir, “The Old Neck,” is both lifeline and pressure point. Built upon stone causeways from the Age of Giants, it houses a vibrant market town fortified with black-timber palisades. Merchants, mercenaries, pilgrims, and outlaws alike pass through here. Beneath the cobbled streets, it is said there are old barrows sealed with rune-iron — occasionally one breaks open. The town watch is strong, but overworked, and superstition runs thick as trade.",
+      "x": 52.174,
+      "y": 62.526,
+      "icon": "town"
+    }
+  ]

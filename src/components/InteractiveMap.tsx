@@ -1,61 +1,72 @@
-
 import { useState, useRef, useEffect, MouseEvent, WheelEvent } from "react";
 import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
 import MapControls from "./MapControls";
+import MapToolbar from "./MapToolbar";
 
 const InteractiveMap = () => {
   const { points, addPoint } = useMap();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
-  
+
   const [isPanning, setIsPanning] = useState(false);
   const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isAddingPoint, setIsAddingPoint] = useState(false);
-  
+
   const handleMapClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!isAddingPoint || !mapContainerRef.current) return;
-    
+
     const rect = mapContainerRef.current.getBoundingClientRect();
-    
-    const x = ((e.clientX - rect.left) / scale - position.x / scale) * 100 / mapContainerRef.current.offsetWidth;
-    const y = ((e.clientY - rect.top) / scale - position.y / scale) * 100 / mapContainerRef.current.offsetHeight;
-    
-    if (window['add-point-modal'] && typeof window['add-point-modal'].showModal === 'function') {
-      window['add-point-modal'].showModal(x, y);
+
+    // Calculate the cursor's position relative to the map's current transformation
+    const cursorX = (e.clientX - rect.left - position.x) / scale;
+    const cursorY = (e.clientY - rect.top - position.y) / scale;
+
+    // Convert to percentage coordinates relative to the map container
+    const x = (cursorX / rect.width) * 100;
+    const y = (cursorY / rect.height) * 100;
+
+    if (
+      window["add-point-modal"] &&
+      typeof window["add-point-modal"].showModal === "function"
+    ) {
+      window["add-point-modal"].showModal(x, y);
     }
-    
+
     setIsAddingPoint(false);
   };
-  
+
   const handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     if (isAddingPoint) return;
     setIsPanning(true);
     setStartPoint({ x: e.clientX - position.x, y: e.clientY - position.y });
+    setCursorPosition({ x: e.clientX, y: e.clientY });
   };
-  
+
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!isPanning) return;
-    
+
     // Direct position update without transition for immediate response
     setPosition({
       x: e.clientX - startPoint.x,
-      y: e.clientY - startPoint.y
+      y: e.clientY - startPoint.y,
     });
   };
-  
+
   const handleMouseUp = () => {
     setIsPanning(false);
   };
-  
+
   const handleWheel = (e: WheelEvent<HTMLDivElement>) => {
     e.preventDefault();
-    
-    // Get the cursor position relative to the map container
+
     if (!mapContainerRef.current) return;
     const rect = mapContainerRef.current.getBoundingClientRect();
+
+    // Get the cursor position relative to the map container
     const cursorX = e.clientX - rect.left;
     const cursorY = e.clientY - rect.top;
 
@@ -66,32 +77,34 @@ const InteractiveMap = () => {
     // Calculate scale change
     const delta = e.deltaY > 0 ? 0.9 : 1.1; // Scale factor
     const newScale = Math.min(Math.max(scale * delta, 0.5), 5); // Limit scale between 0.5 and 5
-    
-    // Calculate new position to zoom towards the cursor position
-    const newX = cursorX - cursorPosOnMapX * newScale;
-    const newY = cursorY - cursorPosOnMapY * newScale;
-    
+
+    // Adjust position to zoom towards the cursor position
+    const newX = position.x - (cursorPosOnMapX * (newScale - scale));
+    const newY = position.y - (cursorPosOnMapY * (newScale - scale));
+
+    setCursorPosition({ x: e.clientX, y: e.clientY });
     setScale(newScale);
     setPosition({
       x: newX,
-      y: newY
+      y: newY,
     });
   };
-  
+
   const handleZoom = (direction: "in" | "out") => {
-    setScale(prevScale => {
-      const newScale = direction === "in" 
-        ? Math.min(prevScale * 1.2, 5) 
-        : Math.max(prevScale / 1.2, 0.5);
+    setScale((prevScale) => {
+      const newScale =
+        direction === "in"
+          ? Math.min(prevScale * 2, 5)
+          : Math.max(prevScale / 2, 0.5);
       return newScale;
     });
   };
-  
+
   const handleReset = () => {
     setScale(1);
     setPosition({ x: 0, y: 0 });
   };
-  
+
   const toggleAddPoint = () => {
     setIsAddingPoint(!isAddingPoint);
   };
@@ -100,7 +113,9 @@ const InteractiveMap = () => {
     <div className="w-full h-full overflow-hidden border border-border">
       <div
         ref={mapContainerRef}
-        className={`relative w-full h-full overflow-hidden bg-black ${isAddingPoint ? "cursor-crosshair" : "cursor-grab"} ${isPanning ? "cursor-grabbing" : ""} select-none`}
+        className={`relative w-full h-full overflow-hidden bg-sea ${
+          isAddingPoint ? "cursor-crosshair" : "cursor-grab"
+        } ${isPanning ? "cursor-grabbing" : ""} select-none`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -110,7 +125,7 @@ const InteractiveMap = () => {
       >
         <div
           ref={mapRef}
-          className="absolute w-full h-full origin-center select-none"
+          className="absolute w-full h-full origin-top-left select-none"
           style={{
             transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
           }}
@@ -121,19 +136,24 @@ const InteractiveMap = () => {
             className="w-full h-full object-contain pointer-events-none select-none"
             draggable="false"
           />
-          
+
           {points.map((point) => (
-            <PointOfInterest key={point.id} point={point} scale={scale} />
+            <PointOfInterest key={point.id} point={point} scale={1 / scale} />
           ))}
         </div>
       </div>
-      
+
       <MapControls
         onZoomIn={() => handleZoom("in")}
         onZoomOut={() => handleZoom("out")}
         onReset={handleReset}
         onAddPoint={toggleAddPoint}
         isAddingPoint={isAddingPoint}
+      />
+      <MapToolbar
+        scale={scale}
+        position={position}
+        cursorPosition={cursorPosition}
       />
     </div>
   );
