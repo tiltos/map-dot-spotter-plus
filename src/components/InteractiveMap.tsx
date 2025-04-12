@@ -100,7 +100,7 @@ const InteractiveMap = () => {
     <div className="w-full h-full overflow-hidden border border-border">
       <div
         ref={mapContainerRef}
-        className={`relative w-full h-full overflow-hidden bg-black ${isAddingPoint ? "cursor-crosshair" : "cursor-grab"} ${isPanning ? "cursor-grabbing" : ""}`}
+        className={`relative w-full h-full overflow-hidden bg-black ${isAddingPoint ? "cursor-crosshair" : "cursor-grab"} ${isPanning ? "cursor-grabbing" : ""} select-none`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -110,7 +110,7 @@ const InteractiveMap = () => {
       >
         <div
           ref={mapRef}
-          className="absolute w-full h-full origin-center"
+          className="absolute w-full h-full origin-center select-none"
           style={{
             transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
           }}
@@ -118,7 +118,8 @@ const InteractiveMap = () => {
           <img
             src="/lovable-uploads/map-locations.jpg"
             alt="Skarnheim Map"
-            className="w-full h-full object-contain pointer-events-none"
+            className="w-full h-full object-contain pointer-events-none select-none"
+            draggable="false"
           />
           
           {points.map((point) => (
