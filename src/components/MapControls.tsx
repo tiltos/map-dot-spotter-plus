@@ -20,7 +20,7 @@ const MapControls = ({
 }: MapControlsProps) => {
   return (
     <TooltipProvider>
-      <div className="absolute bottom-4 right-4 flex flex-col gap-2 bg-background/90 p-2 rounded-lg border border-border shadow-md">
+      <div className="absolute top-4 left-4 flex flex-col gap-2 bg-background/90 p-2 rounded-lg border border-border shadow-md">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button

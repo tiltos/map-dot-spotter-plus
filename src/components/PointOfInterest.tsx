@@ -19,6 +19,8 @@ const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
   const positionStyle = {
     left: `${point.x}%`,
     top: `${point.y}%`,
+    transform: `scale(${scale})`,
+        transformOrigin: "center",
   };
   
   const handleEdit = () => {
@@ -54,18 +56,18 @@ const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
                   isHovering ? 'bg-primary/40 scale-110' : 'bg-primary/20'
                 }`}
               >
-                <div className="text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" style={{ width: "20px", height: "20px" }}>
+                <div className="text-white drop-shadow-[0_0px_2px_rgba(0,0,0,1)]" style={{ width: "20px", height: "20px" }}>
                   {getIconForType(point.icon, 20)}
                 </div>
               </div>
               
-              <div className="mt-1 text-white text-[10px] font-serif whitespace-nowrap drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
+              <div className="mt-1 text-white text-[10px] font-serif whitespace-nowrap drop-shadow-[0px_0px_2px_rgba(0,0,0,1)]">
                 {point.name}
               </div>
               
               {isHovering && (
                 <div className="absolute -top-2 -right-2 flex gap-1">
-                  <button
+                  {/* <button
                     onClick={handleEdit}
                     className="bg-secondary text-secondary-foreground rounded-full p-1 hover:bg-secondary/80"
                   >
@@ -76,7 +78,7 @@ const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
                     className="bg-destructive text-destructive-foreground rounded-full p-1 hover:bg-destructive/80"
                   >
                     <X size={14} />
-                  </button>
+                  </button> */}
                 </div>
               )}
             </div>
