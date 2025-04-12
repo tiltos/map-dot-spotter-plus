@@ -59,14 +59,17 @@ const InteractiveMap = () => {
     const cursorX = e.clientX - rect.left;
     const cursorY = e.clientY - rect.top;
 
+    // Calculate position of cursor relative to the transformed map
+    const cursorPosOnMapX = (cursorX - position.x) / scale;
+    const cursorPosOnMapY = (cursorY - position.y) / scale;
+
     // Calculate scale change
     const delta = e.deltaY > 0 ? 0.9 : 1.1; // Scale factor
     const newScale = Math.min(Math.max(scale * delta, 0.5), 5); // Limit scale between 0.5 and 5
     
     // Calculate new position to zoom towards the cursor position
-    const scaleRatio = newScale / scale;
-    const newX = cursorX - scaleRatio * (cursorX - position.x);
-    const newY = cursorY - scaleRatio * (cursorY - position.y);
+    const newX = cursorX - cursorPosOnMapX * newScale;
+    const newY = cursorY - cursorPosOnMapY * newScale;
     
     setScale(newScale);
     setPosition({
