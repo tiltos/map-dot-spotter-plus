@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect, MouseEvent } from "react";
+
+import { useState, useRef, useEffect, MouseEvent, WheelEvent } from "react";
 import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
 import MapControls from "./MapControls";
@@ -37,6 +38,8 @@ const InteractiveMap = () => {
   
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!isPanning) return;
+    
+    // Direct position update without transition for immediate response
     setPosition({
       x: e.clientX - startPoint.x,
       y: e.clientY - startPoint.y
@@ -45,6 +48,31 @@ const InteractiveMap = () => {
   
   const handleMouseUp = () => {
     setIsPanning(false);
+  };
+  
+  const handleWheel = (e: WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    
+    // Get the cursor position relative to the map container
+    if (!mapContainerRef.current) return;
+    const rect = mapContainerRef.current.getBoundingClientRect();
+    const cursorX = e.clientX - rect.left;
+    const cursorY = e.clientY - rect.top;
+
+    // Calculate scale change
+    const delta = e.deltaY > 0 ? 0.9 : 1.1; // Scale factor
+    const newScale = Math.min(Math.max(scale * delta, 0.5), 5); // Limit scale between 0.5 and 5
+    
+    // Calculate new position to zoom towards the cursor position
+    const scaleRatio = newScale / scale;
+    const newX = cursorX - scaleRatio * (cursorX - position.x);
+    const newY = cursorY - scaleRatio * (cursorY - position.y);
+    
+    setScale(newScale);
+    setPosition({
+      x: newX,
+      y: newY
+    });
   };
   
   const handleZoom = (direction: "in" | "out") => {
@@ -75,10 +103,11 @@ const InteractiveMap = () => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onClick={handleMapClick}
+        onWheel={handleWheel}
       >
         <div
           ref={mapRef}
-          className="absolute w-full h-full origin-center transition-transform duration-200"
+          className="absolute w-full h-full origin-center"
           style={{
             transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
           }}
