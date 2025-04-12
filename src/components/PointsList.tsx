@@ -2,11 +2,16 @@
 import { useMap } from "@/context/MapContext";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getIconForType } from "@/utils/icons";
-import { Edit, X } from "lucide-react";
+import { getIconForType, getIconOptions } from "@/utils/icons";
+import { Edit, X, Filter } from "lucide-react";
+import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const PointsList = () => {
   const { points, deletePoint } = useMap();
+  const [filter, setFilter] = useState<string>("all");
+  
+  const iconOptions = getIconOptions();
   
   const handleEdit = (pointId: string) => {
     const point = points.find(p => p.id === pointId);
@@ -21,24 +26,53 @@ const PointsList = () => {
       modal.showModal();
     }
   };
+  
+  // Filter points based on selected icon type
+  const filteredPoints = filter === "all" 
+    ? points 
+    : points.filter(point => point.icon === filter);
 
   return (
     <div className="bg-card rounded-lg border border-border h-full flex flex-col">
       <div className="p-4 border-b border-border">
         <h2 className="text-lg font-semibold">Points of Interest</h2>
-        <p className="text-sm text-muted-foreground">
-          {points.length} location{points.length !== 1 ? 's' : ''} marked
-        </p>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-sm text-muted-foreground">
+            {filteredPoints.length} location{filteredPoints.length !== 1 ? 's' : ''} marked
+          </p>
+          
+          <div className="flex items-center">
+            <Filter className="mr-2 h-4 w-4 text-muted-foreground" />
+            <Select value={filter} onValueChange={setFilter}>
+              <SelectTrigger className="w-[130px] h-8 text-xs">
+                <SelectValue placeholder="Filter by type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All types</SelectItem>
+                {iconOptions.map(option => (
+                  <SelectItem key={option.id} value={option.id} className="flex items-center">
+                    <div className="flex items-center">
+                      <span className="mr-2">{option.icon}</span>
+                      <span>{option.name}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </div>
       
       <ScrollArea className="flex-1">
-        {points.length === 0 ? (
+        {filteredPoints.length === 0 ? (
           <div className="p-4 text-center text-muted-foreground">
-            No points added yet. Click on the map to add your first point!
+            {filter === "all" 
+              ? "No points added yet. Click on the map to add your first point!" 
+              : "No points match the selected filter."}
           </div>
         ) : (
           <div className="space-y-1 p-1">
-            {points.map((point) => (
+            {filteredPoints.map((point) => (
               <div
                 key={point.id}
                 className="flex items-center p-2 rounded-md hover:bg-accent group"
