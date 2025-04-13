@@ -1,14 +1,17 @@
+
 import { useState, useRef, useEffect, MouseEvent, WheelEvent } from "react";
 import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
 import MapControls from "./MapControls";
 import MapToolbar from "./MapToolbar";
 import PointsList from "./PointsList";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const InteractiveMap = () => {
   const { points, addPoint, centerPosition, setCenterPosition } = useMap();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
   const [isPanning, setIsPanning] = useState(false);
   const [startPoint, setStartPoint] = useState({ x: 0, y: 0 });
@@ -154,10 +157,10 @@ const InteractiveMap = () => {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-full overflow-hidden flex flex-col">
       <div
         ref={mapContainerRef}
-        className={`relative w-full h-full overflow-hidden bg-sea ${
+        className={`relative ${isMobile ? 'h-[70vh]' : 'h-full'} overflow-hidden bg-sea ${
           isAddingPoint ? "cursor-crosshair" : "cursor-grab"
         } ${isPanning ? "cursor-grabbing" : ""} select-none`}
         onMouseDown={handleMouseDown}
@@ -214,10 +217,11 @@ const InteractiveMap = () => {
         isAddingPoint={isAddingPoint}
       />
 
-      <div className="absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)] pointer-events-auto z-10">
+      <div className={`${isMobile ? 'absolute bottom-0 w-full h-[30vh]' : 'absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)]'} pointer-events-auto z-10`}>
         <PointsList
           activePointId={activePointId}
           onSelectPoint={handleSelectPoint}
+          isMobile={isMobile}
         />
       </div>
     </div>

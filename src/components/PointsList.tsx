@@ -18,9 +18,10 @@ import React from "react";
 interface PointsListProps {
   activePointId: string | null;
   onSelectPoint: (id: string) => void;
+  isMobile?: boolean;
 }
 
-const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
+const PointsList = ({ activePointId, onSelectPoint, isMobile = false }: PointsListProps) => {
   const { points, deletePoint, setCenterPosition } = useMap();
   const [filter, setFilter] = useState<string>("all");
 
@@ -42,41 +43,49 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
 
   return (
     <div className="bg-card rounded-lg border border-border h-full flex flex-col">
-      <div className="p-4 border-b border-border">
-        <h2 className="text-lg font-semibold">Points of Interest</h2>
-        <div className="flex items-center justify-between mt-2">
-          <p className="text-sm text-muted-foreground">
-            {filteredPoints.length} location
-            {filteredPoints.length !== 1 ? "s" : ""} marked
-          </p>
+      {!isMobile && (
+        <div className="p-4 border-b border-border">
+          <h2 className="text-lg font-semibold">Points of Interest</h2>
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-sm text-muted-foreground">
+              {filteredPoints.length} location
+              {filteredPoints.length !== 1 ? "s" : ""} marked
+            </p>
 
-          <div className="flex items-center">
-            <Filter className="mr-2 h-4 w-4 text-muted-foreground" />
-            <Select value={filter} onValueChange={setFilter}>
-              <SelectTrigger className="w-[130px] h-8 text-xs">
-                <SelectValue placeholder="Filter by type" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All types</SelectItem>
-                {iconOptions.map((option) => (
-                  <SelectItem
-                    key={option.id}
-                    value={option.id}
-                    className="flex items-center"
-                  >
-                    <div className="flex items-center">
-                      <span className="mr-2">
-                        <MapIcon icon={option.id} name={option.name} />
-                      </span>
-                      <span>{option.name}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex items-center">
+              <Filter className="mr-2 h-4 w-4 text-muted-foreground" />
+              <Select value={filter} onValueChange={setFilter}>
+                <SelectTrigger className="w-[130px] h-8 text-xs">
+                  <SelectValue placeholder="Filter by type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All types</SelectItem>
+                  {iconOptions.map((option) => (
+                    <SelectItem
+                      key={option.id}
+                      value={option.id}
+                      className="flex items-center"
+                    >
+                      <div className="flex items-center">
+                        <span className="mr-2">
+                          <MapIcon icon={option.id} name={option.name} />
+                        </span>
+                        <span>{option.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
+      {isMobile && (
+        <div className="p-2 border-b border-border">
+          <h2 className="text-base font-semibold text-center">Points of Interest</h2>
+        </div>
+      )}
 
       <ScrollArea className="flex-1">
         {filteredPoints.length === 0 ? (
