@@ -1,11 +1,16 @@
-
 import { useMap } from "@/context/MapContext";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getIconForType, getIconOptions } from "@/utils/icons";
 import { Edit, X, Filter, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import MapIcon from "./MapIcon";
 import React from "react";
 
@@ -17,31 +22,32 @@ interface PointsListProps {
 const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
   const { points, deletePoint } = useMap();
   const [filter, setFilter] = useState<string>("all");
-  
+
   const iconOptions = getIconOptions();
-  
+
   const handleEdit = (pointId: string) => {
-    const point = points.find(p => p.id === pointId);
+    const point = points.find((p) => p.id === pointId);
     if (!point) return;
-    
-    const modal = document.getElementById('edit-point-modal') as HTMLDialogElement;
+
+    const modal = document.getElementById(
+      "edit-point-modal"
+    ) as HTMLDialogElement;
     if (modal) {
       modal.dataset.pointId = point.id;
       modal.dataset.pointName = point.name;
       modal.dataset.pointIcon = point.icon;
-      modal.dataset.pointDescription = point.description || '';
+      modal.dataset.pointDescription = point.description || "";
       modal.showModal();
     }
   };
-  
+
   const handleSelectPoint = (pointId: string) => {
     onSelectPoint(pointId);
   };
-  
+
   // Filter points based on selected icon type
-  const filteredPoints = filter === "all" 
-    ? points 
-    : points.filter(point => point.icon === filter);
+  const filteredPoints =
+    filter === "all" ? points : points.filter((point) => point.icon === filter);
 
   return (
     <div className="bg-card rounded-lg border border-border h-full flex flex-col">
@@ -49,9 +55,10 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
         <h2 className="text-lg font-semibold">Points of Interest</h2>
         <div className="flex items-center justify-between mt-2">
           <p className="text-sm text-muted-foreground">
-            {filteredPoints.length} location{filteredPoints.length !== 1 ? 's' : ''} marked
+            {filteredPoints.length} location
+            {filteredPoints.length !== 1 ? "s" : ""} marked
           </p>
-          
+
           <div className="flex items-center">
             <Filter className="mr-2 h-4 w-4 text-muted-foreground" />
             <Select value={filter} onValueChange={setFilter}>
@@ -60,10 +67,16 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All types</SelectItem>
-                {iconOptions.map(option => (
-                  <SelectItem key={option.id} value={option.id} className="flex items-center">
+                {iconOptions.map((option) => (
+                  <SelectItem
+                    key={option.id}
+                    value={option.id}
+                    className="flex items-center"
+                  >
                     <div className="flex items-center">
-                      <span className="mr-2"><MapIcon icon={option.id} name={option.name} /></span>
+                      <span className="mr-2">
+                        <MapIcon icon={option.id} name={option.name} />
+                      </span>
                       <span>{option.name}</span>
                     </div>
                   </SelectItem>
@@ -73,12 +86,12 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
           </div>
         </div>
       </div>
-      
+
       <ScrollArea className="flex-1">
         {filteredPoints.length === 0 ? (
           <div className="p-4 text-center text-muted-foreground">
-            {filter === "all" 
-              ? "No points added yet. Click on the map to add your first point!" 
+            {filter === "all"
+              ? "No points added yet. Click on the map to add your first point!"
               : "No points match the selected filter."}
           </div>
         ) : (
@@ -92,16 +105,18 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
                 onClick={() => handleSelectPoint(point.id)}
               >
                 <div className="flex items-center">
-                  <div className={`mr-3 flex-shrink-0 ${activePointId === point.id ? "scale-110" : ""}`}>
+                  <div
+                    className={`mr-3 flex-shrink-0 ${
+                      activePointId === point.id ? "scale-110" : ""
+                    }`}
+                  >
                     <MapIcon icon={point.icon} name={point.name} />
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium truncate">{point.name}
-                      <span className="font-light text-muted-foreground">&nbsp;({point.x.toFixed(1)},{point.y.toFixed(1)})</span>
-                    </h3>
+                    <h3 className="font-medium truncate">{point.name}</h3>
                   </div>
-                  
+
                   <div className="ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
                     <Button
                       variant="ghost"
@@ -115,7 +130,7 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
                       <Edit size={15} />
                       <span className="sr-only">Edit {point.name}</span>
                     </Button>
-                    
+
                     <Button
                       variant="ghost"
                       size="icon"
@@ -130,16 +145,18 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
                     </Button>
                   </div>
                 </div>
-                
+
                 {/* Description - only shown when item is active */}
                 {activePointId === point.id && point.description && (
                   <div className="mt-2 text-xs text-muted-foreground pl-10 pr-2 py-1 border-l-2 border-primary/40">
-                    <p>{point.description.split("\n").map((line, index) => (
+                    <p>
+                      {point.description.split("\n").map((line, index) => (
                         <React.Fragment key={index}>
                           {line}
                           <br />
                         </React.Fragment>
-                      ))}</p>
+                      ))}
+                    </p>
                   </div>
                 )}
               </div>

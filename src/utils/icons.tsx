@@ -11,14 +11,14 @@ export const getIconOptions = (): {
   name: string;
 }[] => {
   return [
-    { id: "location", name: "Location" },
     { id: "town", name: "Town" },
     { id: "village", name: "Village" },
     { id: "hamlet", name: "Hamlet" },
 
     { id: "delve", name: "Delve" },
     { id: "camp", name: "Threat Camp" },
-    { id: "unknown", name: "Unknown Location" },
+    { id: "unknown", name: "Unknown" },
+    { id: "location", name: "PoI" },
 
     // { id: "landmark", name: "Landmark" },
 

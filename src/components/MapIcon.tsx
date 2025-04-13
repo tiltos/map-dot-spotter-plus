@@ -13,7 +13,7 @@ class MapIcon extends Component<MapIconProps> {
       <img
         src={`/icons/${icon}.png`}
         alt={name}
-        style={{ width: `40px`, height: `40px` }}
+        style={{ width: `40px`, height: `40px`, maxWidth: 'none' }}
       />
     );
   }

@@ -127,16 +127,20 @@ const AddPointForm = ({ isEdit = false }: AddPointFormProps) => {
               rows={3}
             />
           </div>
+
+          <div>
+            <Label htmlFor="description">coords: {pointData.x}, {pointData.y}</Label>
+          </div>
           
           <div>
             <Label>Icon</Label>
             <RadioGroup 
               value={icon} 
               onValueChange={setIcon}
-              className="grid grid-cols-4 gap-2 mt-2"
+              className="flex flex-wrap mt-2"
             >
               {iconOptions.map(option => (
-                <div key={option.id} className="flex items-center space-x-2">
+                <div key={option.id} className="flex  mt-2 items-center space-x-2">
                   <RadioGroupItem value={option.id} id={option.id} className="sr-only" />
                   <Label 
                     htmlFor={option.id} 
