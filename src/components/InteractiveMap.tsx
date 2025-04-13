@@ -1,5 +1,4 @@
-
-import { useState, useRef, useEffect, MouseEvent, WheelEvent } from "react";
+import { useState, useRef, useEffect, MouseEvent, WheelEvent, TouchEvent } from "react";
 import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
 import MapControls from "./MapControls";
@@ -20,6 +19,7 @@ const InteractiveMap = () => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isAddingPoint, setIsAddingPoint] = useState(false);
   const [activePointId, setActivePointId] = useState<string | null>(null);
+  const [touchDistance, setTouchDistance] = useState<number | null>(null);
 
   useEffect(() => {
     if (centerPosition && mapRef.current) {
@@ -113,6 +113,77 @@ const InteractiveMap = () => {
     });
   };
 
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    if (isAddingPoint) return;
+    
+    // For panning (single touch)
+    if (e.touches.length === 1) {
+      setIsPanning(true);
+      setStartPoint({ 
+        x: e.touches[0].clientX - position.x, 
+        y: e.touches[0].clientY - position.y 
+      });
+    }
+    // For zooming (pinch - two touches)
+    else if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      setTouchDistance(distance);
+    }
+  };
+
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    e.preventDefault(); // Prevent scrolling while interacting with the map
+    
+    // For panning (single touch)
+    if (e.touches.length === 1 && isPanning) {
+      setPosition({
+        x: e.touches[0].clientX - startPoint.x,
+        y: e.touches[0].clientY - startPoint.y,
+      });
+    } 
+    // For zooming (pinch - two touches)
+    else if (e.touches.length === 2 && touchDistance !== null) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const newDistance = Math.sqrt(dx * dx + dy * dy);
+      
+      // Calculate pinch center point
+      const centerX = (e.touches[0].clientX + e.touches[1].clientX) / 2;
+      const centerY = (e.touches[0].clientY + e.touches[1].clientY) / 2;
+      
+      if (!mapContainerRef.current) return;
+      const rect = mapContainerRef.current.getBoundingClientRect();
+      
+      const cursorX = centerX - rect.left;
+      const cursorY = centerY - rect.top;
+      
+      const cursorPosOnMapX = (cursorX - position.x) / scale;
+      const cursorPosOnMapY = (cursorY - position.y) / scale;
+      
+      // Calculate zoom factor based on pinch distance change
+      const zoomFactor = newDistance / touchDistance;
+      const newScale = Math.min(Math.max(scale * zoomFactor, 1), 5);
+      
+      // Adjust position to keep the pinch center fixed
+      const newX = position.x - cursorPosOnMapX * (newScale - scale);
+      const newY = position.y - cursorPosOnMapY * (newScale - scale);
+      
+      setTouchDistance(newDistance);
+      setScale(newScale);
+      setPosition({
+        x: newX,
+        y: newY,
+      });
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsPanning(false);
+    setTouchDistance(null);
+  };
+
   const handleSelectPoint = (pointId: string) => {
     setActivePointId(pointId === activePointId ? null : pointId);
   };
@@ -169,6 +240,10 @@ const InteractiveMap = () => {
         onMouseLeave={handleMouseUp}
         onClick={handleMapClick}
         onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         <div
           ref={mapRef}
