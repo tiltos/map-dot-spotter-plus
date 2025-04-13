@@ -1,60 +1,66 @@
 [
-    {
-      "id": "1",
-      "name": "Drevask",
-      "description": "Tucked between the tide-twisted roots of the southern woods, **Drevask** seems almost grown from the land — its longhouses are built from washed-up timbers and bones of beached leviathans. Smoke rises from peat fires, and lanterns of green glass glow even when the wind is still.\n\nThe people of Drevask rarely smile, but they do not turn travelers away — especially those who carry weapons. Every house has a sprig of pine nailed above the door and a shallow bowl of black salt beneath the threshold.",
-      "x": 60.81,
-      "y": 73.61,
-      "icon": "hamlet"
-    },
-    {
-      "id": "2",
-      "name": "Svartalune Camp",
-      "description": "Every winter, the wandering Frostborn Thal pitch their broad-hide tents near the river edge, in a camp they call Svartalune — “The Dark Moon Place.” Their longships remain beached along frozen banks, and their runecasters leave wards woven from reindeer horn and flax. They are friendly — for now — but their skalds tell of an old debt owed to a “Bone-King” in the east.",
-      "x": 94.08333333333333,
-      "y": 61.625,
-      "icon": "village"
-    },
-    {
-      "id": "3",
-      "name": "Kallmyr Hall",
-      "description": "Kallmyr Hall is the last remnant of a shattered noble house. The hall rises from frostbitten land, surrounded by stone cairns, burnt orchards, and rot-haunted pastures. Lord Heigrim the Blacktooth still lives — or something that bears his name does. The villagers cling to his protection, though they no longer speak of the manor’s west wing.",
-      "x": 36.87631022135417,
-      "y": 64.5,
-      "icon": "hamlet"
-    },
-    {
-      "id": "4",
-      "name": "Eldnavir",
-      "description": "Eldnavir, “The Old Neck,” is both lifeline and pressure point. Built upon stone causeways from the Age of Giants, it houses a vibrant market town fortified with black-timber palisades. Merchants, mercenaries, pilgrims, and outlaws alike pass through here. Beneath the cobbled streets, it is said there are old barrows sealed with rune-iron — occasionally one breaks open. The town watch is strong, but overworked, and superstition runs thick as trade.",
-      "x": 53.302,
-      "y": 62.359,
-      "icon": "town"
-    },
-    {
-      "id": "5",
-      "name": "Ice-heart Court",
-      "description": "",
-      "x": 81.361,
-      "y": 54.915,
-      "icon": "camp"
-    }
-    ,
-    {
-      "id": "6",
-      "name": "Gnawling Horde",
-      "description": "",
-      "x": 8.204,
-      "y": 56.225,
-      "icon": "camp"
-    }
-    ,
-    {
-      "id": "7",
-      "name": "Duskling Camp",
-      "description": "",
-      "x": 41.904,
-      "y": 30.675,
-      "icon": "camp"
-    }
-  ]
+  {
+    "id": "1",
+    "name": "Drevask",
+    "description": "Tucked between the tide-twisted roots of the southern woods, **Drevask** seems almost grown from the land — its longhouses are built from washed-up timbers and bones of beached leviathans. Smoke rises from peat fires, and lanterns of green glass glow even when the wind is still.\n\nThe people of Drevask rarely smile, but they do not turn travelers away — especially those who carry weapons. Every house has a sprig of pine nailed above the door and a shallow bowl of black salt beneath the threshold.",
+    "x": 60.81,
+    "y": 73.61,
+    "icon": "hamlet"
+  },
+  {
+    "id": "2",
+    "name": "Svartalune Camp",
+    "description": "Every winter, the wandering Frostborn Thal pitch their broad-hide tents near the river edge, in a camp they call Svartalune — “The Dark Moon Place.” Their longships remain beached along frozen banks, and their runecasters leave wards woven from reindeer horn and flax. They are friendly — for now — but their skalds tell of an old debt owed to a “Bone-King” in the east.",
+    "x": 94.08333333333333,
+    "y": 61.625,
+    "icon": "village"
+  },
+  {
+    "id": "3",
+    "name": "Kallmyr Hall",
+    "description": "Kallmyr Hall is the last remnant of a shattered noble house. The hall rises from frostbitten land, surrounded by stone cairns, burnt orchards, and rot-haunted pastures. Lord Heigrim the Blacktooth still lives — or something that bears his name does. The villagers cling to his protection, though they no longer speak of the manor’s west wing.",
+    "x": 36.87631022135417,
+    "y": 64.5,
+    "icon": "hamlet"
+  },
+  {
+    "id": "4",
+    "name": "Eldnavir",
+    "description": "Eldnavir, “The Old Neck,” is both lifeline and pressure point. Built upon stone causeways from the Age of Giants, it houses a vibrant market town fortified with black-timber palisades. Merchants, mercenaries, pilgrims, and outlaws alike pass through here. Beneath the cobbled streets, it is said there are old barrows sealed with rune-iron — occasionally one breaks open. The town watch is strong, but overworked, and superstition runs thick as trade.",
+    "x": 53.302,
+    "y": 62.359,
+    "icon": "town"
+  },
+  {
+    "id": "5",
+    "name": "Ice-heart Court",
+    "description": "",
+    "x": 81.361,
+    "y": 54.915,
+    "icon": "camp"
+  },
+  {
+    "id": "6",
+    "name": "Gnawling Horde",
+    "description": "",
+    "x": 8.204,
+    "y": 56.225,
+    "icon": "camp"
+  },
+  {
+    "id": "7",
+    "name": "Duskling Camp",
+    "description": "",
+    "x": 41.904,
+    "y": 30.675,
+    "icon": "camp"
+  },
+  {
+    "id": "8",
+    "name": "Delve",
+    "description": "",
+    "x": 60.698,
+    "y": 54.88,
+    "icon": "delve"
+  }
+]
