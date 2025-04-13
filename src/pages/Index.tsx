@@ -13,9 +13,6 @@ const Index = () => {
             <h1 className="text-2xl font-bold tracking-wider">
               SKARNHEIM MAP EXPLORER
             </h1>
-            <div className="text-sm text-muted-foreground">
-              Interactive Fantasy Map
-            </div>
           </div>
         </header>
         
