@@ -284,13 +284,15 @@ const InteractiveMap = () => {
         </div>
       </div>
 
-      <MapControls
-        onZoomIn={() => handleZoom("in")}
-        onZoomOut={() => handleZoom("out")}
-        onReset={handleReset}
-        onAddPoint={toggleAddPoint}
-        isAddingPoint={isAddingPoint}
-      />
+      {!isMobile && (
+        <MapControls
+          onZoomIn={() => handleZoom("in")}
+          onZoomOut={() => handleZoom("out")}
+          onReset={handleReset}
+          onAddPoint={toggleAddPoint}
+          isAddingPoint={isAddingPoint}
+        />
+      )}
 
       <div className={`${isMobile ? 'absolute bottom-0 w-full h-[30vh]' : 'absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)]'} pointer-events-auto z-10`}>
         <PointsList
