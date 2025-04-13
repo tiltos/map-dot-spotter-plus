@@ -7,10 +7,10 @@ const Index = () => {
   return (
     <MapProvider>
       <div className="min-h-screen bg-background flex flex-col">
-        <header className="border-b border-border p-4 z-10 bg-background">
+        <header className="border-b border-lightsea p-4 z-10 bg-sea">
           <div className="container flex justify-center items-center">
             <h1 className="text-2xl font-bold tracking-wider">
-              SKARNHEIM
+              <img src="skarnheim.svg" alt="Skarnheim" className="h-8 mr-2" />
             </h1>
           </div>
         </header>

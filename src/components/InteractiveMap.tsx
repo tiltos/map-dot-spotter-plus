@@ -145,7 +145,7 @@ const InteractiveMap = () => {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-hidden border border-border">
+    <div className="w-full h-full overflow-hidden">
       <div
         ref={mapContainerRef}
         className={`relative w-full h-full overflow-hidden bg-sea ${

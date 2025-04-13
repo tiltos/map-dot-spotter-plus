@@ -25,22 +25,6 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
 
   const iconOptions = getIconOptions();
 
-  const handleEdit = (pointId: string) => {
-    const point = points.find((p) => p.id === pointId);
-    if (!point) return;
-
-    const modal = document.getElementById(
-      "edit-point-modal"
-    ) as HTMLDialogElement;
-    if (modal) {
-      modal.dataset.pointId = point.id;
-      modal.dataset.pointName = point.name;
-      modal.dataset.pointIcon = point.icon;
-      modal.dataset.pointDescription = point.description || "";
-      modal.showModal();
-    }
-  };
-
   const handleSelectPoint = (pointId: string) => {
     onSelectPoint(pointId);
   };
@@ -114,23 +98,10 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-medium truncate">{point.name}</h3>
+                    <h3 className="font-medium truncate relative">{point.name} {activePointId === point.id && point.icon && (<span className="absolute right-0 font-light text-muted-foreground capitalize">{point.icon}</span>)}</h3>
                   </div>
 
                   <div className="ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleEdit(point.id);
-                      }}
-                      className="h-7 w-7"
-                    >
-                      <Edit size={15} />
-                      <span className="sr-only">Edit {point.name}</span>
-                    </Button>
-
                     <Button
                       variant="ghost"
                       size="icon"
