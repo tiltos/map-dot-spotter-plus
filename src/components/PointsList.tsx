@@ -1,3 +1,4 @@
+
 import { useMap } from "@/context/MapContext";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -20,13 +21,19 @@ interface PointsListProps {
 }
 
 const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
-  const { points, deletePoint } = useMap();
+  const { points, deletePoint, setCenterPosition } = useMap();
   const [filter, setFilter] = useState<string>("all");
 
   const iconOptions = getIconOptions();
 
   const handleSelectPoint = (pointId: string) => {
     onSelectPoint(pointId);
+    
+    // Find the point and center the map on it
+    const point = points.find(p => p.id === pointId);
+    if (point) {
+      setCenterPosition({ x: point.x, y: point.y });
+    }
   };
 
   // Filter points based on selected icon type

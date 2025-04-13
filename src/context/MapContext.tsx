@@ -10,12 +10,15 @@ type MapContextType = {
   addPoint: (point: Omit<PointOfInterestType, "id">) => void;
   deletePoint: (id: string) => void;
   updatePoint: (id: string, point: Partial<PointOfInterestType>) => void;
+  centerPosition: { x: number, y: number } | null;
+  setCenterPosition: (position: { x: number, y: number } | null) => void;
 };
 
 const MapContext = createContext<MapContextType | undefined>(undefined);
 
 export const MapProvider = ({ children }: { children: ReactNode }) => {
   const [points, setPoints] = useState<PointOfInterestType[]>(pointsData);
+  const [centerPosition, setCenterPosition] = useState<{ x: number, y: number } | null>(null);
 
   const addPoint = (point: Omit<PointOfInterestType, "id">) => {
     const newPoint = { ...point, id: uuidv4() };
@@ -47,7 +50,14 @@ export const MapProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <MapContext.Provider value={{ points, addPoint, deletePoint, updatePoint }}>
+    <MapContext.Provider value={{ 
+      points, 
+      addPoint, 
+      deletePoint, 
+      updatePoint,
+      centerPosition,
+      setCenterPosition
+    }}>
       {children}
     </MapContext.Provider>
   );

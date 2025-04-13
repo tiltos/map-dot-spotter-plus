@@ -3,10 +3,10 @@ import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
 import MapControls from "./MapControls";
 import MapToolbar from "./MapToolbar";
-import PointsList from "./PointsList"; // Add this import
+import PointsList from "./PointsList";
 
 const InteractiveMap = () => {
-  const { points, addPoint } = useMap();
+  const { points, addPoint, centerPosition, setCenterPosition } = useMap();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
 
@@ -18,12 +18,31 @@ const InteractiveMap = () => {
   const [isAddingPoint, setIsAddingPoint] = useState(false);
   const [activePointId, setActivePointId] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (centerPosition && mapRef.current) {
+      const { x, y } = centerPosition;
+      
+      const targetX = (x / 100) * mapRef.current.offsetWidth;
+      const targetY = (y / 100) * mapRef.current.offsetHeight;
+      
+      if (mapContainerRef.current) {
+        const containerWidth = mapContainerRef.current.offsetWidth;
+        const containerHeight = mapContainerRef.current.offsetHeight;
+        
+        const newX = (containerWidth / 2) - (targetX * scale);
+        const newY = (containerHeight / 2) - (targetY * scale);
+        
+        setPosition({ x: newX, y: newY });
+        setCenterPosition(null);
+      }
+    }
+  }, [centerPosition, scale, setCenterPosition]);
+
   const handleMapClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!isAddingPoint || !mapRef.current) return;
 
     const rect = mapRef.current.getBoundingClientRect();
 
-    // Calculate the cursor's position relative to the map's current transformation
     console.log("e.clientX, clientX", e.clientX, e.clientY);
     console.log("rect", rect);
 
@@ -32,11 +51,8 @@ const InteractiveMap = () => {
     const cursorX = (e.clientX - rect.left) / scale;
     const cursorY = (e.clientY - rect.top) / scale;
 
-    // Convert to percentage coordinates relative to the map container
     const x = Number(((cursorX / mapRef.current.offsetWidth) * 100).toFixed(3));
-    const y = Number(
-      ((cursorY / mapRef.current.offsetHeight) * 100).toFixed(3)
-    );
+    const y = Number(((cursorY / mapRef.current.offsetHeight) * 100).toFixed(3));
 
     if (
       window["add-point-modal"] &&
@@ -58,7 +74,6 @@ const InteractiveMap = () => {
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!isPanning) return;
 
-    // Direct position update without transition for immediate response
     setPosition({
       x: e.clientX - startPoint.x,
       y: e.clientY - startPoint.y,
@@ -75,19 +90,15 @@ const InteractiveMap = () => {
     if (!mapContainerRef.current) return;
     const rect = mapContainerRef.current.getBoundingClientRect();
 
-    // Get the cursor position relative to the map container
     const cursorX = e.clientX - rect.left;
     const cursorY = e.clientY - rect.top;
 
-    // Calculate position of cursor relative to the transformed map
     const cursorPosOnMapX = (cursorX - position.x) / scale;
     const cursorPosOnMapY = (cursorY - position.y) / scale;
 
-    // Calculate scale change
-    const delta = e.deltaY > 0 ? 0.8 : 1.2; // Scale factor
-    const newScale = Math.min(Math.max(scale * delta, 1), 5); // Limit scale between 0.5 and 5
+    const delta = e.deltaY > 0 ? 0.8 : 1.2;
+    const newScale = Math.min(Math.max(scale * delta, 1), 5);
 
-    // Adjust position to zoom towards the cursor position
     const newX = position.x - cursorPosOnMapX * (newScale - scale);
     const newY = position.y - cursorPosOnMapY * (newScale - scale);
 
@@ -119,12 +130,11 @@ const InteractiveMap = () => {
     const containerRect = mapContainerRef.current.getBoundingClientRect();
     const mapRect = mapRef.current.getBoundingClientRect();
 
-    // Calculate the offsets to center the map
     const centerX = (containerRect.width - mapRect.width * scale) / 2;
     const centerY = (containerRect.height - mapRect.height * scale) / 2;
 
-    setScale(1); // Reset scale to 1
-    setPosition({ x: centerX, y: centerY }); // Center the map
+    setScale(1);
+    setPosition({ x: centerX, y: centerY });
   };
 
   const toggleAddPoint = () => {
@@ -137,7 +147,6 @@ const InteractiveMap = () => {
     const containerRect = mapContainerRef.current.getBoundingClientRect();
     const mapRect = mapRef.current.getBoundingClientRect();
 
-    // Calculate the offsets to center the map
     const centerX = (containerRect.width - mapRect.width) / 2;
     const centerY = (containerRect.height - mapRect.height) / 2;
 
@@ -165,6 +174,7 @@ const InteractiveMap = () => {
             transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
             width: "1200px",
             height: "1200px",
+            transition: centerPosition ? "transform 0.5s ease-in-out" : "none",
           }}
         >
           <img
@@ -185,19 +195,6 @@ const InteractiveMap = () => {
           ))}
         </div>
         <div className="absolute bottom-4 left-4">
-          {/* <div
-            className="absolute scale-key text-cream text-xs"
-            style={{
-              top: "-17px",
-            }}
-          >
-            <div
-              className="scale-key-label"
-              style={{ transform: `translateX(calc(20% * ${scale}))` }}
-            >
-              10
-            </div>
-          </div> */}
           <img
             src="/scale.svg"
             className="w-[150px] h-[12px] pointer-events-none select-none"
@@ -217,7 +214,6 @@ const InteractiveMap = () => {
         isAddingPoint={isAddingPoint}
       />
 
-      {/* Points list with active point */}
       <div className="absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)] pointer-events-auto z-10">
         <PointsList
           activePointId={activePointId}
