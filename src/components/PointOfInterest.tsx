@@ -60,7 +60,7 @@ const PointOfInterest = ({ point, scale, isActive, onSelect }: PointOfInterestPr
       <div className="relative flex flex-col items-center">
         <div
           className={`${
-            isActive ? "scale-125 transition-transform" : ""
+            isActive ? "scale-150 transition-transform" : ""
           } text-white drop-shadow-[0_0px_2px_rgba(0,0,0,1)]`}
           style={{ width: "40px", height: "40px" }}
         >
