@@ -4,6 +4,7 @@ import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
 import MapControls from "./MapControls";
 import MapToolbar from "./MapToolbar";
+import PointsList from "./PointsList"; // Add this import
 
 const InteractiveMap = () => {
   const { points, addPoint } = useMap();
