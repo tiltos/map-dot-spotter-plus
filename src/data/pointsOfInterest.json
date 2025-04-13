@@ -34,7 +34,7 @@
   {
     "id": "5",
     "name": "Ice-heart Court",
-    "description": "",
+    "description": "*It is believed that in the primordial times, the ancient Fey Courts held wind and sun in their power. With a word, a Fey queen could ravage a land with storms, or scorch it with sun. However, as the old gods emerged, the Fey had to relinquish more and more of their power, driving them back into the deep forests and the snow-capped mountains.\n\nAcross the land, the Ice-heart Court seeks to reclaim their ancient rights. Their terrible queen seeks to plunge the world into a perpetual winter where she would become powerful enough to challenge the gods themselves.",
     "x": 81.361,
     "y": 54.915,
     "icon": "camp"
@@ -42,7 +42,7 @@
   {
     "id": "6",
     "name": "Gnawling Horde",
-    "description": "",
+    "description": "Stories say that when settlers arrived in this region, it was empty of life, but those settlers were not the first to live here. In the old times, a great war was fought over these lands, between what scholars call the ‘Morning People’, and a far more ancient force that resided here.*\n\n*The war ended with the Morning People being cursed and banished from the surface world, dwelling underground as the curse ate away at their sanity and their very form. Now, their bestial forms have returned to reclaim the surface world, by blade and by spell.",
     "x": 8.204,
     "y": 56.225,
     "icon": "camp"
@@ -50,7 +50,7 @@
   {
     "id": "7",
     "name": "Duskling Camp",
-    "description": "",
+    "description": "The far reaches nominally ruled by the Dusklings are notoriously inaccessible to travelers, but groups setting out as raiders, mercenaries, or simply adventurers are a common sight around the lands.\n\nA war-like culture, Dusklings worship animalistic gods that are said to predate even the Old Gods, yet refuse any call from an outsider that has not undergone the “Ritual of Strife and Scar”. The Dusklings themselves rarely speak of their origins, placing little value in it, but feel a strong affinity for the night. Duskling priests emphasize the role of their people in maintaining the balance between the physical world and the fey realms.",
     "x": 41.904,
     "y": 30.675,
     "icon": "camp"
