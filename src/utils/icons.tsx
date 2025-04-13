@@ -18,7 +18,7 @@ export const getIconOptions = (): {
     { id: "delve", name: "Delve" },
     { id: "camp", name: "Threat Camp" },
     { id: "unknown", name: "Unknown" },
-    { id: "location", name: "PoI" },
+    { id: "location", name: "Point of Interest" },
 
     // { id: "landmark", name: "Landmark" },
 
