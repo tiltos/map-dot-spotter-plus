@@ -3,12 +3,17 @@ import { useMap } from "@/context/MapContext";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getIconForType, getIconOptions } from "@/utils/icons";
-import { Edit, X, Filter } from "lucide-react";
+import { Edit, X, Filter, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import MapIcon from "./MapIcon";
 
-const PointsList = () => {
+interface PointsListProps {
+  activePointId: string | null;
+  onSelectPoint: (id: string) => void;
+}
+
+const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
   const { points, deletePoint } = useMap();
   const [filter, setFilter] = useState<string>("all");
   
@@ -26,6 +31,10 @@ const PointsList = () => {
       modal.dataset.pointDescription = point.description || '';
       modal.showModal();
     }
+  };
+  
+  const handleSelectPoint = (pointId: string) => {
+    onSelectPoint(pointId);
   };
   
   // Filter points based on selected icon type
@@ -76,40 +85,57 @@ const PointsList = () => {
             {filteredPoints.map((point) => (
               <div
                 key={point.id}
-                className="flex items-center p-2 rounded-md hover:bg-accent group"
+                className={`flex flex-col p-2 rounded-md hover:bg-accent group cursor-pointer ${
+                  activePointId === point.id ? "bg-accent/80" : ""
+                }`}
+                onClick={() => handleSelectPoint(point.id)}
               >
-                <div className="mr-3 flex-shrink-0">
-                  <MapIcon icon={point.icon} name={point.name} />
-                </div>
-                
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-medium truncate">{point.name}<span className="font-light text-muted-foreground">&nbsp;({point.x},{point.y})</span></h3>
-                  {point.description && (
-                    <p className="text-xs text-muted-foreground wrap">{point.description}</p>
-                  )}
-                </div>
-                
-                <div className="ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => handleEdit(point.id)}
-                    className="h-7 w-7"
-                  >
-                    <Edit size={15} />
-                    <span className="sr-only">Edit {point.name}</span>
-                  </Button>
+                <div className="flex items-center">
+                  <div className={`mr-3 flex-shrink-0 ${activePointId === point.id ? "scale-110" : ""}`}>
+                    <MapIcon icon={point.icon} name={point.name} />
+                  </div>
                   
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => deletePoint(point.id)}
-                    className="h-7 w-7 text-destructive hover:text-destructive"
-                  >
-                    <X size={15} />
-                    <span className="sr-only">Delete {point.name}</span>
-                  </Button>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium truncate">{point.name}
+                      <span className="font-light text-muted-foreground">&nbsp;({point.x.toFixed(1)},{point.y.toFixed(1)})</span>
+                    </h3>
+                  </div>
+                  
+                  <div className="ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEdit(point.id);
+                      }}
+                      className="h-7 w-7"
+                    >
+                      <Edit size={15} />
+                      <span className="sr-only">Edit {point.name}</span>
+                    </Button>
+                    
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deletePoint(point.id);
+                      }}
+                      className="h-7 w-7 text-destructive hover:text-destructive"
+                    >
+                      <X size={15} />
+                      <span className="sr-only">Delete {point.name}</span>
+                    </Button>
+                  </div>
                 </div>
+                
+                {/* Description - only shown when item is active */}
+                {activePointId === point.id && point.description && (
+                  <div className="mt-2 text-xs text-muted-foreground pl-10 pr-2 py-1 border-l-2 border-primary/40">
+                    <p>{point.description}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
