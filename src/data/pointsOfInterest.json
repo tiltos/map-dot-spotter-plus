@@ -1,12 +1,13 @@
 [
   {
     "id": "1",
-    "name": "Drevask",
-    "description": "Tucked between the tide-twisted roots of the southern woods, **Drevask** seems almost grown from the land — its longhouses are built from washed-up timbers and bones of beached leviathans. Smoke rises from peat fires, and lanterns of green glass glow even when the wind is still.\n\nThe people of Drevask rarely smile, but they do not turn travelers away — especially those who carry weapons. Every house has a sprig of pine nailed above the door and a shallow bowl of black salt beneath the threshold.",
-    "x": 60.81,
-    "y": 73.61,
-    "icon": "hamlet"
+    "name": "Eldnavir",
+    "description": "Eldnavir, “The Old Neck,” is both lifeline and pressure point. Built upon stone causeways from the Age of Giants, it houses a vibrant market town fortified with black-timber palisades. Merchants, mercenaries, pilgrims, and outlaws alike pass through here. Beneath the cobbled streets, it is said there are old barrows sealed with rune-iron — occasionally one breaks open. The town watch is strong, but overworked, and superstition runs thick as trade.",
+    "x": 53.302,
+    "y": 62.359,
+    "icon": "town"
   },
+
   {
     "id": "2",
     "name": "Svartalune Camp",
@@ -25,11 +26,11 @@
   },
   {
     "id": "4",
-    "name": "Eldnavir",
-    "description": "Eldnavir, “The Old Neck,” is both lifeline and pressure point. Built upon stone causeways from the Age of Giants, it houses a vibrant market town fortified with black-timber palisades. Merchants, mercenaries, pilgrims, and outlaws alike pass through here. Beneath the cobbled streets, it is said there are old barrows sealed with rune-iron — occasionally one breaks open. The town watch is strong, but overworked, and superstition runs thick as trade.",
-    "x": 53.302,
-    "y": 62.359,
-    "icon": "town"
+    "name": "Drevask",
+    "description": "Tucked between the tide-twisted roots of the southern woods, **Drevask** seems almost grown from the land — its longhouses are built from washed-up timbers and bones of beached leviathans. Smoke rises from peat fires, and lanterns of green glass glow even when the wind is still.\n\nThe people of Drevask rarely smile, but they do not turn travelers away — especially those who carry weapons. Every house has a sprig of pine nailed above the door and a shallow bowl of black salt beneath the threshold.",
+    "x": 60.81,
+    "y": 73.61,
+    "icon": "hamlet"
   },
   {
     "id": "5",
@@ -57,8 +58,8 @@
   },
   {
     "id": "8",
-    "name": "Delve",
-    "description": "",
+    "name": "The Hollow Under Varrbjorn",
+    "description": "Long ago, a stone-mouth opened beneath the hill called Varrbjorn — the Bear of the Wind. Carved steps descend into cold earth, flanked by statues worn faceless by time. Locals say it was once a treasury, then a tomb, then something else. Now, the air down there smells of copper and pine tar, and no bird sings atop the hill.",
     "x": 60.698,
     "y": 54.88,
     "icon": "delve"

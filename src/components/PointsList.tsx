@@ -7,6 +7,7 @@ import { Edit, X, Filter, ChevronDown, ChevronUp } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import MapIcon from "./MapIcon";
+import React from "react";
 
 interface PointsListProps {
   activePointId: string | null;
@@ -133,7 +134,12 @@ const PointsList = ({ activePointId, onSelectPoint }: PointsListProps) => {
                 {/* Description - only shown when item is active */}
                 {activePointId === point.id && point.description && (
                   <div className="mt-2 text-xs text-muted-foreground pl-10 pr-2 py-1 border-l-2 border-primary/40">
-                    <p>{point.description}</p>
+                    <p>{point.description.split("\n").map((line, index) => (
+                        <React.Fragment key={index}>
+                          {line}
+                          <br />
+                        </React.Fragment>
+                      ))}</p>
                   </div>
                 )}
               </div>

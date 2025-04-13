@@ -195,7 +195,7 @@ const InteractiveMap = () => {
       />
       
       {/* Points list with active point */}
-      <div className="absolute top-4 right-4 w-full max-w-[350px] h-[calc(100%-2rem)] pointer-events-auto z-10">
+      <div className="absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)] pointer-events-auto z-10">
         <PointsList 
           activePointId={activePointId} 
           onSelectPoint={handleSelectPoint} 
