@@ -1,3 +1,4 @@
+
 import { useState, useRef, useEffect, MouseEvent, WheelEvent } from "react";
 import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
@@ -15,6 +16,7 @@ const InteractiveMap = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [isAddingPoint, setIsAddingPoint] = useState(false);
+  const [activePointId, setActivePointId] = useState<string | null>(null);
 
   const handleMapClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!isAddingPoint || !mapRef.current) return;
@@ -96,6 +98,10 @@ const InteractiveMap = () => {
     });
   };
 
+  const handleSelectPoint = (pointId: string) => {
+    setActivePointId(pointId === activePointId ? null : pointId);
+  };
+
   const handleZoom = (direction: "in" | "out") => {
     setScale((prevScale) => {
       const newScale =
@@ -107,9 +113,6 @@ const InteractiveMap = () => {
   };
 
   const handleReset = () => {
-    // setScale(1);
-    // setPosition({ x: 0, y: 0 });
-
     if (!mapContainerRef.current || !mapRef.current) return;
 
     const containerRect = mapContainerRef.current.getBoundingClientRect();
@@ -171,7 +174,13 @@ const InteractiveMap = () => {
           />
 
           {points.map((point) => (
-            <PointOfInterest key={point.id} point={point} scale={1 / scale} />
+            <PointOfInterest 
+              key={point.id} 
+              point={point} 
+              scale={1 / scale}
+              isActive={point.id === activePointId}
+              onSelect={handleSelectPoint}
+            />
           ))}
         </div>
       </div>
@@ -183,11 +192,14 @@ const InteractiveMap = () => {
         onAddPoint={toggleAddPoint}
         isAddingPoint={isAddingPoint}
       />
-      {/* <MapToolbar
-        scale={scale}
-        position={position}
-        cursorPosition={cursorPosition}
-      /> */}
+      
+      {/* Points list with active point */}
+      <div className="absolute top-4 right-4 w-full max-w-[350px] h-[calc(100%-2rem)] pointer-events-auto z-10">
+        <PointsList 
+          activePointId={activePointId} 
+          onSelectPoint={handleSelectPoint} 
+        />
+      </div>
     </div>
   );
 };

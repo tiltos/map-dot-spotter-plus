@@ -1,7 +1,6 @@
 
 import { MapProvider } from "@/context/MapContext";
 import InteractiveMap from "@/components/InteractiveMap";
-import PointsList from "@/components/PointsList";
 import AddPointForm from "@/components/AddPointForm";
 
 const Index = () => {
@@ -20,11 +19,6 @@ const Index = () => {
           {/* Map takes full width/height */}
           <div className="absolute inset-0">
             <InteractiveMap />
-          </div>
-          
-          {/* Points list overlay */}
-          <div className="absolute top-4 right-4 w-full max-w-[350px] h-[calc(100%-2rem)] pointer-events-auto z-10">
-            <PointsList />
           </div>
         </main>
         
