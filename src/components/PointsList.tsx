@@ -102,7 +102,7 @@ const PointsList = ({
           {!isMobile && (
             <div className="flex items-center justify-between mt-2 p-4 pt-1 border-b border-border">
               <p className="text-sm text-muted-foreground">
-                {filteredPoints.length} {filter}
+                {filteredPoints.length} {filter === "all" ? "locations" : filter}
                 {filteredPoints.length !== 1 ? "s" : ""}
               </p>
 
