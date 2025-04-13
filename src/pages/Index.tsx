@@ -9,9 +9,9 @@ const Index = () => {
     <MapProvider>
       <div className="min-h-screen bg-background flex flex-col">
         <header className="border-b border-border p-4 z-10 bg-background">
-          <div className="container flex justify-between items-center">
+          <div className="container flex justify-center items-center">
             <h1 className="text-2xl font-bold tracking-wider">
-              SKARNHEIM MAP EXPLORER
+              SKARNHEIM
             </h1>
           </div>
         </header>

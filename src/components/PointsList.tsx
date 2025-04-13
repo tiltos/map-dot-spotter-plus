@@ -6,6 +6,7 @@ import { getIconForType, getIconOptions } from "@/utils/icons";
 import { Edit, X, Filter } from "lucide-react";
 import { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import MapIcon from "./MapIcon";
 
 const PointsList = () => {
   const { points, deletePoint } = useMap();
@@ -52,7 +53,7 @@ const PointsList = () => {
                 {iconOptions.map(option => (
                   <SelectItem key={option.id} value={option.id} className="flex items-center">
                     <div className="flex items-center">
-                      <span className="mr-2">{option.icon}</span>
+                      <span className="mr-2"><MapIcon icon={option.id} name={option.name} /></span>
                       <span>{option.name}</span>
                     </div>
                   </SelectItem>
@@ -78,7 +79,7 @@ const PointsList = () => {
                 className="flex items-center p-2 rounded-md hover:bg-accent group"
               >
                 <div className="mr-3 flex-shrink-0">
-                  {getIconForType(point.icon, 24)}
+                  <MapIcon icon={point.icon} name={point.name} />
                 </div>
                 
                 <div className="flex-1 min-w-0">

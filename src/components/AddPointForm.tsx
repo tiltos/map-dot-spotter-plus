@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogC
 import { useMap } from "@/context/MapContext";
 import { X } from "lucide-react";
 import { getIconOptions } from "@/utils/icons";
+import MapIcon from "./MapIcon";
 
 interface AddPointFormProps {
   isEdit?: boolean;
@@ -144,7 +145,7 @@ const AddPointForm = ({ isEdit = false }: AddPointFormProps) => {
                     }`}
                   >
                     <div className="w-8 h-8 mb-1 flex items-center justify-center">
-                      {option.icon}
+                      <MapIcon icon={option.id} name={option.name} />
                     </div>
                     <span className="text-xs">{option.name}</span>
                   </Label>

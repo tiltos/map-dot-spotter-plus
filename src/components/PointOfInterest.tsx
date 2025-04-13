@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/tooltip";
 import { getIconForType } from "@/utils/icons";
 import { X, Edit } from "lucide-react";
+import MapIcon from "./MapIcon";
 
 interface PointOfInterestProps {
   point: PointOfInterestType;
@@ -62,11 +63,7 @@ const PointOfInterest = ({ point, scale }: PointOfInterestProps) => {
                 style={{ width: "40px", height: "40px" }}
               >
                 {/* {getIconForType(point.icon, 20)} */}
-                <img
-                  src={`/icons/${point.icon}-alt.png`}
-                  alt={point.name}
-                  style={{ width: "40px", height: "40px" }}
-                />
+                <MapIcon icon={point.icon} name={point.name} />
               </div>
 
               <div

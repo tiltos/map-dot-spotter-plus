@@ -183,11 +183,11 @@ const InteractiveMap = () => {
         onAddPoint={toggleAddPoint}
         isAddingPoint={isAddingPoint}
       />
-      <MapToolbar
+      {/* <MapToolbar
         scale={scale}
         position={position}
         cursorPosition={cursorPosition}
-      />
+      /> */}
     </div>
   );
 };

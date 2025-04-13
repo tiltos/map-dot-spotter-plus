@@ -30,5 +30,31 @@
       "x": 53.302,
       "y": 62.359,
       "icon": "town"
+    },
+    {
+      "id": "5",
+      "name": "Ice-heart Court",
+      "description": "",
+      "x": 81.361,
+      "y": 54.915,
+      "icon": "camp"
+    }
+    ,
+    {
+      "id": "6",
+      "name": "Gnawling Horde",
+      "description": "",
+      "x": 8.204,
+      "y": 56.225,
+      "icon": "camp"
+    }
+    ,
+    {
+      "id": "7",
+      "name": "Duskling Camp",
+      "description": "",
+      "x": 41.904,
+      "y": 30.675,
+      "icon": "camp"
     }
   ]
