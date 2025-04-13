@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect, MouseEvent, WheelEvent } from "react";
 import { useMap } from "@/context/MapContext";
 import PointOfInterest from "./PointOfInterest";
@@ -35,8 +34,9 @@ const InteractiveMap = () => {
 
     // Convert to percentage coordinates relative to the map container
     const x = Number(((cursorX / mapRef.current.offsetWidth) * 100).toFixed(3));
-    const y = Number(((cursorY / mapRef.current.offsetHeight) * 100).toFixed(3));
-
+    const y = Number(
+      ((cursorY / mapRef.current.offsetHeight) * 100).toFixed(3)
+    );
 
     if (
       window["add-point-modal"] &&
@@ -175,14 +175,37 @@ const InteractiveMap = () => {
           />
 
           {points.map((point) => (
-            <PointOfInterest 
-              key={point.id} 
-              point={point} 
+            <PointOfInterest
+              key={point.id}
+              point={point}
               scale={1 / scale}
               isActive={point.id === activePointId}
               onSelect={handleSelectPoint}
             />
           ))}
+        </div>
+        <div className="absolute bottom-4 left-4">
+          {/* <div
+            className="absolute scale-key text-cream text-xs"
+            style={{
+              top: "-17px",
+            }}
+          >
+            <div
+              className="scale-key-label"
+              style={{ transform: `translateX(calc(20% * ${scale}))` }}
+            >
+              10
+            </div>
+          </div> */}
+          <img
+            src="/scale.svg"
+            className="w-[150px] h-[12px] pointer-events-none select-none"
+            style={{
+              transform: `scaleX(${scale})`,
+              transformOrigin: "left bottom",
+            }}
+          />
         </div>
       </div>
 
@@ -193,12 +216,12 @@ const InteractiveMap = () => {
         onAddPoint={toggleAddPoint}
         isAddingPoint={isAddingPoint}
       />
-      
+
       {/* Points list with active point */}
       <div className="absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)] pointer-events-auto z-10">
-        <PointsList 
-          activePointId={activePointId} 
-          onSelectPoint={handleSelectPoint} 
+        <PointsList
+          activePointId={activePointId}
+          onSelectPoint={handleSelectPoint}
         />
       </div>
     </div>
