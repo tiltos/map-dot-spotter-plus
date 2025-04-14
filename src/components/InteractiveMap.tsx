@@ -231,7 +231,7 @@ const InteractiveMap = () => {
     <div className="w-full h-full overflow-hidden flex flex-col">
       <div
         ref={mapContainerRef}
-        className={`relative ${isMobile ? 'h-[70vh]' : 'h-full'} overflow-hidden bg-sea ${
+        className={`relative ${isMobile ? activePointId ? 'h-[calc(40vh-65px)]' : 'h-[calc(70vh-65px)]' : 'h-full'} overflow-hidden bg-sea ${
           isAddingPoint ? "cursor-crosshair" : "cursor-grab"
         } ${isPanning ? "cursor-grabbing" : ""} select-none`}
         onMouseDown={handleMouseDown}
@@ -275,7 +275,7 @@ const InteractiveMap = () => {
         <div className="absolute bottom-4 left-4">
           <img
             src="/scale.svg"
-            className="w-[150px] h-[12px] pointer-events-none select-none"
+            className={`w-[150px]  pointer-events-none select-none ${isMobile ? "hidden" : "h-[12px]"}`}
             style={{
               transform: `scaleX(${scale})`,
               transformOrigin: "left bottom",
@@ -294,13 +294,13 @@ const InteractiveMap = () => {
         />
       )}
 
-      <div className={`${isMobile ? 'absolute bottom-0 w-full h-[30vh]' : 'absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)]'} pointer-events-auto z-10`}>
+      
         <PointsList
           activePointId={activePointId}
           onSelectPoint={handleSelectPoint}
           isMobile={isMobile}
         />
-      </div>
+      
     </div>
   );
 };
