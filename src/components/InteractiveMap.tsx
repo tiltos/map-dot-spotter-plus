@@ -231,7 +231,7 @@ const InteractiveMap = () => {
     <div className="w-full h-full overflow-hidden flex flex-col">
       <div
         ref={mapContainerRef}
-        className={`relative ${isMobile ? activePointId ? 'h-[calc(40dvh)]' : 'h-[calc(70dvh)]' : 'h-full'} overflow-hidden bg-sea ${
+        className={`relative ${isMobile ? activePointId ? 'h-[calc(40vh)]' : 'h-[calc(70vh)]' : 'h-full'} overflow-hidden bg-sea ${
           isAddingPoint ? "cursor-crosshair" : "cursor-grab"
         } ${isPanning ? "cursor-grabbing" : ""} select-none`}
         onMouseDown={handleMouseDown}

@@ -6,7 +6,7 @@ import AddPointForm from "@/components/AddPointForm";
 const Index = () => {
   return (
     <MapProvider>
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="min-h-[100dvh] bg-background flex flex-col">
         <header className="border-b border-lightsea p-4 z-10 bg-sea absolute top-0 left-0 right-0">
           <div className="container flex justify-center items-center">
             <h1 className="text-2xl font-bold tracking-wider">
