@@ -15,6 +15,7 @@ export const getIconOptions = (): {
     { id: "village", name: "Village" },
     { id: "hamlet", name: "Hamlet" },
 
+    { id: "encounter", name: "Encounter" },
     { id: "delve", name: "Delve" },
     { id: "camp", name: "Threat Camp" },
     { id: "unknown", name: "Unknown" },

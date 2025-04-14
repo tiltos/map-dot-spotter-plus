@@ -332,7 +332,7 @@ const PointsList = ({
               .
             </p>
             <p className="mt-4 mb-4">
-              Tools used for creating the map (all free):
+              Tools used for creating the map:
             </p>
             <ol className="list-disc pl-5">
               <li>
@@ -387,7 +387,7 @@ const PointsList = ({
               </li>
             </ol>
             <p className="mt-4 mb-4">
-              Tools used for creating the website (all free):
+              Tools used for creating the website:
             </p>
             <ol className="list-disc pl-5">
               <li>
@@ -403,10 +403,10 @@ const PointsList = ({
               <li>
                 <a
                   className="underline text-lightsea"
-                  href="https://www.photopea.com/"
+                  href="https://www.mapeffects.co/viking-effects"
                   target="_BLANK"
                 >
-                  Photopea
+                  Map Effects: Vikings
                 </a>{" "}
                 for creating map icons
               </li>
