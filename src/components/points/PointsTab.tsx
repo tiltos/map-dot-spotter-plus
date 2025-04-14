@@ -13,7 +13,7 @@ interface PointsTabProps {
 }
 
 const PointsTab = ({ activePointId, onSelectPoint, isMobile }: PointsTabProps) => {
-  const { points, deletePoint, setCenterPosition } = useMap();
+  const { points, setCenterPosition } = useMap();
   const [filter, setFilter] = useState<string>("all");
   const activePointRef = useRef<HTMLDivElement>(null);
 
@@ -62,7 +62,6 @@ const PointsTab = ({ activePointId, onSelectPoint, isMobile }: PointsTabProps) =
                     point={point}
                     isActive={isActive}
                     onSelect={() => handleSelectPoint(point.id)}
-                    onDelete={() => deletePoint(point.id)}
                   />
                 );
               })}

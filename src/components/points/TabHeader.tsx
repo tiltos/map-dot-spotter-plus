@@ -8,10 +8,10 @@ const TabHeader = () => {
       <TabsTrigger value="points" className="flex-1">
         Points of Interest
       </TabsTrigger>
-      <TabsTrigger value="story" className="px-2">
+      <TabsTrigger value="story" className="px-2" title="The Campaign">
         <ScrollText size={18} />
       </TabsTrigger>
-      <TabsTrigger value="info" className="px-2">
+      <TabsTrigger value="info" className="px-2" title="Info">
         <Info size={18} />
       </TabsTrigger>
     </TabsList>

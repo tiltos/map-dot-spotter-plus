@@ -18,7 +18,7 @@ const StoryTab = () => {
           <br />
           Yrsa has seen them in her dreams — antlered things of bone and
           mist. A cairn lies in the forest north of here, said to be
-          sealed with **song-runes** only a Dream-Singer can break…
+          sealed with song-runes only a Dream-Singer can break…
         </blockquote>
         <p className="mt-4 mb-4">
           This campaign follows the story of the Thornborn Kin.
@@ -38,16 +38,16 @@ const StoryTab = () => {
           </em>
         </p>
         <ul>
-          <li>
-            <strong>Thoren Alvsson</strong>{" "}
+          <li className="mt-2 mb-2">
+            <strong>Thoren Alvsson</strong><br />
             <em>
               Once heir to a fallen thanehold drowned in debt and fire,
               Thoren now leads with wounded pride. His blade,
               'Mourngleam,' is heirloom steel tarnished by betrayal.
             </em>
           </li>
-          <li>
-            <strong>Yrsa Dream-Singer</strong>{" "}
+          <li className="mt-2 mb-2">
+            <strong>Yrsa Dream-Singer</strong><br />
             <em>
               Born in a thunderstorm, her mother struck dead as she
               screamed her first breath. Raised by spirit-singers, she
@@ -55,32 +55,32 @@ const StoryTab = () => {
               bone.
             </em>
           </li>
-          <li>
-            <strong>Halvar the Grey</strong>{" "}
+          <li  className="mt-2 mb-2">
+            <strong>Halvar the Grey</strong><br />
             <em>
               Born to a weather-worn clan that patrols the forest
               borderlands, Halvar knows the tracks of beasts and bandits
               alike. Few speak as plainly or shoot as cleanly.
             </em>
           </li>
-          <li>
-            <strong>Vael Ashborne</strong>{" "}
+          <li className="mt-2 mb-2">
+            <strong>Vael Ashborne</strong><br />
             <em>
               Born to a mortal woman and a forgotten winter spirit, Vael
               is as unreadable as the shifting snow. His eyes glow
               faintly in moonlight, and animals hesitate near him.
             </em>
           </li>
-          <li>
-            <strong>Sten Fenborn</strong>{" "}
+          <li className="mt-2 mb-2">
+            <strong>Sten Fenborn</strong><br />
             <em>
               A swamp-born hunter from the ice-fens. Sten never speaks
               of the night his village vanished. He bears a crude
               bear-paw talisman and sees omens in blood patterns.
             </em>
           </li>
-          <li>
-            <strong>Rurik Tallow-Eyes</strong>{" "}
+          <li className="mt-2 mb-2">
+            <strong>Rurik Tallow-Eyes</strong><br />
             <em>
               Pale-eyed and soft-spoken, Rurik arrived from the east,
               barefoot and covered in candle wax. Some say he was a

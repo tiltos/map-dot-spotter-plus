@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
@@ -9,19 +8,13 @@ interface PointItemProps {
   point: PointOfInterestType;
   isActive: boolean;
   onSelect: () => void;
-  onDelete: () => void;
   ref?: React.Ref<HTMLDivElement>;
 }
 
 const PointItem = React.forwardRef<HTMLDivElement, PointItemProps>(
-  ({ point, isActive, onSelect, onDelete }, ref) => {
+  ({ point, isActive, onSelect }, ref) => {
     const handleClick = () => {
       onSelect();
-    };
-
-    const handleDelete = (e: React.MouseEvent) => {
-      e.stopPropagation();
-      onDelete();
     };
 
     return (
@@ -33,11 +26,7 @@ const PointItem = React.forwardRef<HTMLDivElement, PointItemProps>(
         onClick={handleClick}
       >
         <div className="flex items-center">
-          <div
-            className={`mr-3 flex-shrink-0 ${
-              isActive ? "scale-110" : ""
-            }`}
-          >
+          <div className={`mr-3 flex-shrink-0 ${isActive ? "scale-110" : ""}`}>
             <MapIcon icon={point.icon} name={point.name} />
           </div>
 
@@ -51,34 +40,18 @@ const PointItem = React.forwardRef<HTMLDivElement, PointItemProps>(
               )}
             </h3>
           </div>
-
-          <div className="ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleDelete}
-              className="h-7 w-7 text-destructive hover:text-destructive"
-            >
-              <X size={15} />
-              <span className="sr-only">
-                Delete {point.name}
-              </span>
-            </Button>
-          </div>
         </div>
 
         {/* Description - only shown when item is active */}
         {isActive && point.description && (
-          <div className="mt-2 text-xs text-muted-foreground pl-10 pr-2 py-1 border-l-2 border-primary/40">
+          <div className="mt-2 text-xs text-muted-foreground pl-5 pr-2 py-1 border-l-2 border-primary/40">
             <p>
-              {point.description
-                .split("\n")
-                .map((line, index) => (
-                  <React.Fragment key={index}>
-                    {line}
-                    <br />
-                  </React.Fragment>
-                ))}
+              {point.description.split("\n").map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
             </p>
           </div>
         )}
