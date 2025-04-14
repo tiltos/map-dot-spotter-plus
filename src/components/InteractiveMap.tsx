@@ -231,11 +231,11 @@ const InteractiveMap = () => {
     <div className="w-full h-full overflow-hidden flex flex-col">
       <div
         ref={mapContainerRef}
-        className={`relative ${isMobile ? activePointId ? 'h-[calc(40dvh-65px)]' : 'h-[calc(70dvh-65px)]' : 'h-full'} overflow-hidden bg-sea ${
+        className={`relative ${isMobile ? activePointId ? 'h-[calc(40dvh)]' : 'h-[calc(70dvh)]' : 'h-full'} overflow-hidden bg-sea ${
           isAddingPoint ? "cursor-crosshair" : "cursor-grab"
         } ${isPanning ? "cursor-grabbing" : ""} select-none`}
         onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
+        onMouseMove={handleMouseMove} 
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
         onClick={handleMapClick}

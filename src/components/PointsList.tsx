@@ -37,7 +37,7 @@ const PointsList = ({
           ? activePointId
             ? "h-[60dvh] absolute bottom-0 w-full "
             : "h-[30dvh] absolute bottom-0 w-full "
-          : "absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)]"
+          : "absolute top-[5rem] right-4 w-full max-w-[400px] h-[calc(100%-6rem)]"
       } pointer-events-auto z-10`}
     >
       <div
