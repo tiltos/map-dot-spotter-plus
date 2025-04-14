@@ -71,7 +71,7 @@ const PointsList = ({
   return (
     <div
       className={`bg-card rounded-lg border border-border h-full flex flex-col ${
-        isMobile && (activePointId ? "h-[60vh]" : "h-[60vh]")
+        isMobile && (activePointId ? "h-[60vh]" : "h-[30vh]")
       }`}
     >
       {/* Tabs for switching between points and info */}
