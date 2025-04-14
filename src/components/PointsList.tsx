@@ -1,3 +1,4 @@
+
 // Import necessary hooks, components, and utilities
 import { useMap } from "@/context/MapContext"; // Provides map-related context and functions
 import { Button } from "@/components/ui/button"; // UI button component
@@ -82,7 +83,7 @@ const PointsList = ({
         className={`bg-card overflow-hidden rounded-lg border border-border h-full flex flex-col`}
       >
         {/* Tabs for switching between points and info */}
-        <Tabs defaultValue="points" className="w-full">
+        <Tabs defaultValue="points" className="w-full h-full flex flex-col">
           <div
             className={`${
               !isMobile
@@ -104,7 +105,7 @@ const PointsList = ({
           </div>
 
           {/* Points tab content */}
-          <TabsContent value="points" className={`flex-1 flex flex-col ${isMobile ? "mt-[80px]" : ""}`}>
+          <TabsContent value="points" className={`flex-1 flex flex-col overflow-hidden ${isMobile ? "mt-[80px]" : ""}`}>
             {/* Filter dropdown for desktop view */}
             {!isMobile && (
               <div className="flex items-center justify-between mt-2 p-4 pt-1 border-b border-border">
@@ -141,91 +142,93 @@ const PointsList = ({
                 </div>
               </div>
             )}
-            <ScrollArea className="flex-1">
-              {filteredPoints.length === 0 ? (
-                <div className="p-4 text-center text-muted-foreground">
-                  {filter === "all"
-                    ? "No points added yet. Click on the map to add your first point!"
-                    : "No points match the selected filter."}
-                </div>
-              ) : (
-                <div className="space-y-1 p-1">
-                  {filteredPoints.map((point) => {
-                    const isActive = activePointId === point.id; // Check if the point is active
-                    return (
-                      <div
-                        key={point.id}
-                        ref={isActive ? activePointRef : null} // Attach ref to the active point
-                        className={`flex flex-col p-2 rounded-md hover:bg-accent group cursor-pointer ${
-                          isActive ? "bg-accent/80" : ""
-                        }`}
-                        onClick={() => handleSelectPoint(point.id)}
-                      >
-                        <div className="flex items-center">
-                          <div
-                            className={`mr-3 flex-shrink-0 ${
-                              isActive ? "scale-110" : ""
-                            }`}
-                          >
-                            <MapIcon icon={point.icon} name={point.name} />
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-medium truncate relative">
-                              {point.name}
-                              {isActive && point.icon && (
-                                <span className="absolute right-0 font-light text-muted-foreground capitalize">
-                                  {point.icon}
-                                </span>
-                              )}
-                            </h3>
-                          </div>
-
-                          <div className="ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={(e) => {
-                                e.stopPropagation(); // Prevent triggering parent click event
-                                deletePoint(point.id); // Delete the point
-                              }}
-                              className="h-7 w-7 text-destructive hover:text-destructive"
+            <ScrollArea className="flex-1 h-full">
+              <div className="space-y-1 p-1">
+                {filteredPoints.length === 0 ? (
+                  <div className="p-4 text-center text-muted-foreground">
+                    {filter === "all"
+                      ? "No points added yet. Click on the map to add your first point!"
+                      : "No points match the selected filter."}
+                  </div>
+                ) : (
+                  <div className="space-y-1 p-1">
+                    {filteredPoints.map((point) => {
+                      const isActive = activePointId === point.id; // Check if the point is active
+                      return (
+                        <div
+                          key={point.id}
+                          ref={isActive ? activePointRef : null} // Attach ref to the active point
+                          className={`flex flex-col p-2 rounded-md hover:bg-accent group cursor-pointer ${
+                            isActive ? "bg-accent/80" : ""
+                          }`}
+                          onClick={() => handleSelectPoint(point.id)}
+                        >
+                          <div className="flex items-center">
+                            <div
+                              className={`mr-3 flex-shrink-0 ${
+                                isActive ? "scale-110" : ""
+                              }`}
                             >
-                              <X size={15} />
-                              <span className="sr-only">
-                                Delete {point.name}
-                              </span>
-                            </Button>
-                          </div>
-                        </div>
+                              <MapIcon icon={point.icon} name={point.name} />
+                            </div>
 
-                        {/* Description - only shown when item is active */}
-                        {isActive && point.description && (
-                          <div className="mt-2 text-xs text-muted-foreground pl-10 pr-2 py-1 border-l-2 border-primary/40">
-                            <p>
-                              {point.description
-                                .split("\n")
-                                .map((line, index) => (
-                                  <React.Fragment key={index}>
-                                    {line}
-                                    <br />
-                                  </React.Fragment>
-                                ))}
-                            </p>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-medium truncate relative">
+                                {point.name}
+                                {isActive && point.icon && (
+                                  <span className="absolute right-0 font-light text-muted-foreground capitalize">
+                                    {point.icon}
+                                  </span>
+                                )}
+                              </h3>
+                            </div>
+
+                            <div className="ml-2 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={(e) => {
+                                  e.stopPropagation(); // Prevent triggering parent click event
+                                  deletePoint(point.id); // Delete the point
+                                }}
+                                className="h-7 w-7 text-destructive hover:text-destructive"
+                              >
+                                <X size={15} />
+                                <span className="sr-only">
+                                  Delete {point.name}
+                                </span>
+                              </Button>
+                            </div>
                           </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+
+                          {/* Description - only shown when item is active */}
+                          {isActive && point.description && (
+                            <div className="mt-2 text-xs text-muted-foreground pl-10 pr-2 py-1 border-l-2 border-primary/40">
+                              <p>
+                                {point.description
+                                  .split("\n")
+                                  .map((line, index) => (
+                                    <React.Fragment key={index}>
+                                      {line}
+                                      <br />
+                                    </React.Fragment>
+                                  ))}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             </ScrollArea>
           </TabsContent>
 
           {/* Story tab content */}
-          <TabsContent value="story" className="p-4 flex-1 ">
-            <ScrollArea className="flex-1 overflow-auto">
-              <div className="text-sm">
+          <TabsContent value="story" className="flex-1 overflow-hidden">
+            <ScrollArea className="h-full">
+              <div className="p-4 text-sm">
                 <h3 className="font-bold mb-4 mt-0 pt-0 text-lg">
                   The Campaign
                 </h3>
@@ -255,7 +258,7 @@ const PointsList = ({
                   <em>
                     They wear no crest, only a braid of thorn-twine around the
                     hilt or haft of their weapons — some say it hurts to grip,
-                    and that’s the point.
+                    and that's the point.
                   </em>
                 </p>
                 <ul>
@@ -326,114 +329,116 @@ const PointsList = ({
           </TabsContent>
 
           {/* Info tab content */}
-          <TabsContent value="info" className="p-4">
-            <div className="text-sm">
-              <h3 className="font-bold mb-4 mt-0 pt-0 text-lg">
-                About this project
-              </h3>
-              <p className="mt-4 mb-4">
-                Skarnheim is a hobby project created by @tiltos with help from
-                Lovable. It is a fictional fantasy setting, inspired by
-                pre-viking Scandinavia. It was created for a campaign of the
-                tabletop game,{" "}
-                <a
-                  className="underline text-lightsea"
-                  href="https://modiphius.net/pages/five-leagues-from-the-borderlands"
-                  target="_BLANK"
-                >
-                  Five Leagues From the Borderlands
-                </a>
-                .
-              </p>
-              <p className="mt-4 mb-4">Tools used for creating the map:</p>
-              <ol className="list-disc pl-5">
-                <li>
+          <TabsContent value="info" className="flex-1 overflow-hidden">
+            <ScrollArea className="h-full">
+              <div className="p-4 text-sm">
+                <h3 className="font-bold mb-4 mt-0 pt-0 text-lg">
+                  About this project
+                </h3>
+                <p className="mt-4 mb-4">
+                  Skarnheim is a hobby project created by @tiltos with help from
+                  Lovable. It is a fictional fantasy setting, inspired by
+                  pre-viking Scandinavia. It was created for a campaign of the
+                  tabletop game,{" "}
                   <a
                     className="underline text-lightsea"
-                    href="https://www.youtube.com/watch?v=Wurgiy3P_-w"
+                    href="https://modiphius.net/pages/five-leagues-from-the-borderlands"
                     target="_BLANK"
                   >
-                    This tutorial from Kilroy's Kartography
+                    Five Leagues From the Borderlands
                   </a>
-                </li>
-                <li>
+                  .
+                </p>
+                <p className="mt-4 mb-4">Tools used for creating the map:</p>
+                <ol className="list-disc pl-5">
+                  <li>
+                    <a
+                      className="underline text-lightsea"
+                      href="https://www.youtube.com/watch?v=Wurgiy3P_-w"
+                      target="_BLANK"
+                    >
+                      This tutorial from Kilroy's Kartography
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      className="underline text-lightsea"
+                      href="https://azgaar.github.io/Fantasy-Map-Generator/"
+                      target="_BLANK"
+                    >
+                      Azgaar fantasy map generator
+                    </a>{" "}
+                    to create the landmass shapes, biomes and heightmap
+                  </li>
+                  <li>
+                    <a
+                      className="underline text-lightsea"
+                      href="https://quadspinner.com/"
+                      target="_BLANK"
+                    >
+                      Gaea 2
+                    </a>{" "}
+                    to create the erosion and texture maps
+                  </li>
+                  <li>
+                    <a
+                      className="underline text-lightsea"
+                      href="https://www.blender.org/"
+                      target="_BLANK"
+                    >
+                      Blender
+                    </a>{" "}
+                    to add clouds and render the map with global lighting
+                  </li>
+                  <li>
+                    <a
+                      className="underline text-lightsea"
+                      href="https://www.photopea.com/"
+                      target="_BLANK"
+                    >
+                      Photopea
+                    </a>{" "}
+                    (free browser-based Photoshop clone) to add labeling, grading
+                    and visual refinement
+                  </li>
+                </ol>
+                <p className="mt-4 mb-4">Tools used for creating the website:</p>
+                <ol className="list-disc pl-5">
+                  <li>
+                    <a
+                      className="underline text-lightsea"
+                      href="https://lovable.dev/"
+                      target="_BLANK"
+                    >
+                      Lovable.dev
+                    </a>{" "}
+                    to kickstart and accelerate the project (GenAI prototyping
+                    tool)
+                  </li>
+                  <li>
+                    <a
+                      className="underline text-lightsea"
+                      href="https://www.mapeffects.co/viking-effects"
+                      target="_BLANK"
+                    >
+                      Map Effects: Vikings
+                    </a>{" "}
+                    for creating map icons
+                  </li>
+                </ol>
+                <p className="mt-4 mb-4">
+                  This project is publicly available on{" "}
                   <a
                     className="underline text-lightsea"
-                    href="https://azgaar.github.io/Fantasy-Map-Generator/"
+                    href="https://github.com/tiltos/map-dot-spotter-plus"
                     target="_BLANK"
                   >
-                    Azgaar fantasy map generator
-                  </a>{" "}
-                  to create the landmass shapes, biomes and heightmap
-                </li>
-                <li>
-                  <a
-                    className="underline text-lightsea"
-                    href="https://quadspinner.com/"
-                    target="_BLANK"
-                  >
-                    Gaea 2
-                  </a>{" "}
-                  to create the erosion and texture maps
-                </li>
-                <li>
-                  <a
-                    className="underline text-lightsea"
-                    href="https://www.blender.org/"
-                    target="_BLANK"
-                  >
-                    Blender
-                  </a>{" "}
-                  to add clouds and render the map with global lighting
-                </li>
-                <li>
-                  <a
-                    className="underline text-lightsea"
-                    href="https://www.photopea.com/"
-                    target="_BLANK"
-                  >
-                    Photopea
-                  </a>{" "}
-                  (free browser-based Photoshop clone) to add labeling, grading
-                  and visual refinement
-                </li>
-              </ol>
-              <p className="mt-4 mb-4">Tools used for creating the website:</p>
-              <ol className="list-disc pl-5">
-                <li>
-                  <a
-                    className="underline text-lightsea"
-                    href="https://lovable.dev/"
-                    target="_BLANK"
-                  >
-                    Lovable.dev
-                  </a>{" "}
-                  to kickstart and accelerate the project (GenAI prototyping
-                  tool)
-                </li>
-                <li>
-                  <a
-                    className="underline text-lightsea"
-                    href="https://www.mapeffects.co/viking-effects"
-                    target="_BLANK"
-                  >
-                    Map Effects: Vikings
-                  </a>{" "}
-                  for creating map icons
-                </li>
-              </ol>
-              <p className="mt-4 mb-4">
-                This project is publicly available on{" "}
-                <a
-                  className="underline text-lightsea"
-                  href="https://github.com/tiltos/map-dot-spotter-plus"
-                  target="_BLANK"
-                >
-                  Github
-                </a>
-                .
-              </p>
-            </div>
+                    Github
+                  </a>
+                  .
+                </p>
+              </div>
+            </ScrollArea>
           </TabsContent>
         </Tabs>
       </div>
