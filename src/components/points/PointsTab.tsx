@@ -33,7 +33,7 @@ const PointsTab = ({ activePointId, onSelectPoint, isMobile }: PointsTabProps) =
   };
 
   return (
-    <div className={`flex-1 flex flex-col overflow-hidden ${isMobile ? "mt-[80px]" : ""}`}>
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Filter dropdown for desktop view */}
       {!isMobile && (
         <PointsFilter 
@@ -43,8 +43,8 @@ const PointsTab = ({ activePointId, onSelectPoint, isMobile }: PointsTabProps) =
         />
       )}
       
-      <ScrollArea className="flex-1 h-full">
-        <div className="space-y-1 p-1">
+      <ScrollArea className="flex-1">
+        <div className="space-y-1 p-4">
           {filteredPoints.length === 0 ? (
             <div className="p-4 text-center text-muted-foreground">
               {filter === "all"
@@ -52,7 +52,7 @@ const PointsTab = ({ activePointId, onSelectPoint, isMobile }: PointsTabProps) =
                 : "No points match the selected filter."}
             </div>
           ) : (
-            <div className="space-y-1 p-1">
+            <div className="space-y-1">
               {filteredPoints.map((point) => {
                 const isActive = activePointId === point.id;
                 return (

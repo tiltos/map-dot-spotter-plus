@@ -45,7 +45,7 @@ const PointsList = ({
         className={`bg-card overflow-hidden rounded-lg border border-border h-full flex flex-col`}
       >
         {/* Tabs for switching between points and info */}
-        <Tabs defaultValue="points" className="w-full h-full flex flex-col">
+        <Tabs defaultValue="points" className="w-full h-full flex flex-col overflow-hidden">
           <div
             className={`${
               !isMobile
@@ -57,7 +57,7 @@ const PointsList = ({
           </div>
 
           {/* Points tab content */}
-          <TabsContent value="points" className="flex-1 overflow-hidden">
+          <TabsContent value="points" className="flex-1 mt-0 overflow-hidden">
             <PointsTab 
               activePointId={activePointId} 
               onSelectPoint={onSelectPoint} 
@@ -66,12 +66,12 @@ const PointsList = ({
           </TabsContent>
 
           {/* Story tab content */}
-          <TabsContent value="story" className="flex-1 overflow-hidden">
+          <TabsContent value="story" className="flex-1 mt-0 overflow-hidden">
             <StoryTab />
           </TabsContent>
 
           {/* Info tab content */}
-          <TabsContent value="info" className="flex-1 overflow-hidden">
+          <TabsContent value="info" className="flex-1 mt-0 overflow-hidden">
             <InfoTab />
           </TabsContent>
         </Tabs>
