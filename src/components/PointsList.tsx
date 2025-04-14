@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import TabHeader from "./points/TabHeader";
@@ -36,8 +35,8 @@ const PointsList = ({
       className={`${
         isMobile
           ? activePointId
-            ? "h-[60vh] absolute bottom-0 w-full "
-            : "h-[30vh] absolute bottom-0 w-full "
+            ? "h-[60%] absolute bottom-0 w-full "
+            : "h-[30%] absolute bottom-0 w-full "
           : "absolute top-4 right-4 w-full max-w-[400px] h-[calc(100%-2rem)]"
       } pointer-events-auto z-10`}
     >
@@ -45,23 +44,22 @@ const PointsList = ({
         className={`bg-card overflow-hidden rounded-lg border border-border h-full flex flex-col`}
       >
         {/* Tabs for switching between points and info */}
-        <Tabs defaultValue="points" className="w-full h-full flex flex-col overflow-hidden">
+        <Tabs
+          defaultValue="points"
+          className="w-full h-full flex flex-col overflow-hidden"
+        >
           <div
-            className={`${
-              !isMobile
-                ? "p-4 border-b border-border"
-                : "p-2 border-b border-border absolute top-0 left-0 right-0 z-20"
-            }`}
+            className={`border-b border-border ${isMobile ? "p-2" : "p-4"}`}
           >
             <TabHeader />
           </div>
 
           {/* Points tab content */}
           <TabsContent value="points" className="flex-1 mt-0 overflow-hidden">
-            <PointsTab 
-              activePointId={activePointId} 
-              onSelectPoint={onSelectPoint} 
-              isMobile={isMobile} 
+            <PointsTab
+              activePointId={activePointId}
+              onSelectPoint={onSelectPoint}
+              isMobile={isMobile}
             />
           </TabsContent>
 
