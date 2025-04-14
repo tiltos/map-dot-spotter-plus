@@ -99,3 +99,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.markdown p {
+  margin-bottom: 10px;
+}

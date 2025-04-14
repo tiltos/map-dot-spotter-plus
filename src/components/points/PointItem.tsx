@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import MapIcon from "../MapIcon";
 import { PointOfInterestType } from "@/types";
+import ReactMarkdown from "react-markdown";
 
 interface PointItemProps {
   point: PointOfInterestType;
@@ -45,14 +46,9 @@ const PointItem = React.forwardRef<HTMLDivElement, PointItemProps>(
         {/* Description - only shown when item is active */}
         {isActive && point.description && (
           <div className="mt-2 text-xs text-muted-foreground pl-5 pr-2 py-1 border-l-2 border-primary/40">
-            <p>
-              {point.description.split("\n").map((line, index) => (
-                <React.Fragment key={index}>
-                  {line}
-                  <br />
-                </React.Fragment>
-              ))}
-            </p>
+            <div className="markdown">
+            <ReactMarkdown>{point.description}</ReactMarkdown>
+            </div>
           </div>
         )}
       </div>

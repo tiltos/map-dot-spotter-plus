@@ -35,7 +35,7 @@
   {
     "id": "5",
     "name": "Ice-heart Court",
-    "description": "*It is believed that in the primordial times, the ancient Fey Courts held wind and sun in their power. With a word, a Fey queen could ravage a land with storms, or scorch it with sun. However, as the old gods emerged, the Fey had to relinquish more and more of their power, driving them back into the deep forests and the snow-capped mountains.\n\nAcross the land, the Ice-heart Court seeks to reclaim their ancient rights. Their terrible queen seeks to plunge the world into a perpetual winter where she would become powerful enough to challenge the gods themselves.",
+    "description": "It is believed that in the primordial times, the ancient Fey Courts held wind and sun in their power. With a word, a Fey queen could ravage a land with storms, or scorch it with sun. However, as the old gods emerged, the Fey had to relinquish more and more of their power, driving them back into the deep forests and the snow-capped mountains.\n\nAcross the land, the Ice-heart Court seeks to reclaim their ancient rights. Their terrible queen seeks to plunge the world into a perpetual winter where she would become powerful enough to challenge the gods themselves.",
     "x": 81.361,
     "y": 54.915,
     "icon": "camp"
@@ -43,7 +43,7 @@
   {
     "id": "6",
     "name": "Gnawling Horde",
-    "description": "Stories say that when settlers arrived in this region, it was empty of life, but those settlers were not the first to live here. In the old times, a great war was fought over these lands, between what scholars call the ‘Morning People’, and a far more ancient force that resided here.*\n\n*The war ended with the Morning People being cursed and banished from the surface world, dwelling underground as the curse ate away at their sanity and their very form. Now, their bestial forms have returned to reclaim the surface world, by blade and by spell.",
+    "description": "Stories say that when settlers arrived in this region, it was empty of life, but those settlers were not the first to live here. In the old times, a great war was fought over these lands, between what scholars call the ‘Morning People’, and a far more ancient force that resided here.\n\nThe war ended with the Morning People being cursed and banished from the surface world, dwelling underground as the curse ate away at their sanity and their very form. Now, their bestial forms have returned to reclaim the surface world, by blade and by spell.",
     "x": 8.204,
     "y": 56.225,
     "icon": "camp"
@@ -63,5 +63,13 @@
     "x": 60.698,
     "y": 54.88,
     "icon": "delve"
+  },
+  {
+    "id": "101",
+    "name": "The Roots Beneath the Hook",
+    "description": "While resting in **Drevask**, the Thornborn Kin heard the murmurs first — **low and fearful**, like moss peeling from damp stone. A hunter named **Ingril Harrowborn** stumbled into the village with a broken spear and black mud caked beneath her nails. She spoke of shadows with crooked limbs retreating into the deeper wood, dragging bloodied sacks behind them.\n\nThe enemy was no wandering threat — it was an **Ice-heart warband**, goblin-things of the **Frozen Fey**, returning from a raid. Smoke had been seen deep within Huskuld’s Hook, rising not from homes but from old ruins once **choked in vine and silence**. There, the raiders had paused — not to flee, but to **dig**, to spread their roots into Skarnheim’s wounded soil.\n\nSomething else moves among them: a thing **not goblin**, but **worse**. An **Infernal Spawn**, animated by breach and blood, drawn across worlds by hatred and hunger. It wears no name, but **it knows yours** — or someone in your kin’s line — and it has waited long to strike.\n\nBefore you left, a quiet woodsman in Drevask pressed something into your hand — a **birch-bark map** and whispered:\n\n> “There's a wooden box in those ruins. Leave it if you like, but if you find it, don't open it until night.”",
+    "x": 60.243,
+    "y": 76.937,
+    "icon": "encounter"
   }
 ]
